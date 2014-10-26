@@ -7,7 +7,7 @@ module.exports = {
     debug: false
   },
   app: {
-    name: 'MEAN - FullStack JS - Development'
+    name: 'ListeDeCourse.ch'
   },
   facebook: {
     clientID: 'DEFAULT_APP_ID',
@@ -25,8 +25,8 @@ module.exports = {
     callbackURL: 'http://localhost:3000/auth/github/callback'
   },
   google: {
-    clientID: 'DEFAULT_APP_ID',
-    clientSecret: 'APP_SECRET',
+    clientID: '1014971847258-tpdr9q69055dg5qorgssdtgbhk1dgcf0.apps.googleusercontent.com',
+    clientSecret: 'O993PoKTSwuemWBIo_huCSCw',
     callbackURL: 'http://localhost:3000/auth/google/callback'
   },
   linkedin: {
