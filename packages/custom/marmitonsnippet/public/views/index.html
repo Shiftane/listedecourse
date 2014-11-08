@@ -1,15 +1,39 @@
 <div class="" data-ng-controller="MarmitonsnippetController">
-  <div class="text-center">
-    <form novalidate class="simple-form" data-ng-submit="search()" name="searchForm">
-      <input type="text" data-ng-model="query" placeholder="query" />
-      <button type="submit" class="btn btn-info">Search</button>
+  <div class="text-center col-md-12 row">
+    <form novalidate class="form-inline" data-ng-submit="search()" name="searchForm">
+      <div class="col-xs-6 text-right">
+        <input type="text" class="form-control" data-ng-model="query" placeholder="recette, ingrédient, etc." />
+      </div>
+      <div class="col-xs-6 text-left">
+        <button type="submit" class="btn btn-info form-control">Trouver une recette</button>
+      </div>
     </form>
   </div>
-  <div>
-    <div data-ng-repeat="result in results.result">
-    <a data-ng-click="getRecipe(results.baseUrl + result.link)">{{result.title}}</a>
-    </div>    
+  <div class="col-md-3 results" data-ng-show="results.result">
+    <div data-ng-repeat="result in results.result" class="">
+      <div class="">
+          <h6><a data-ng-click="getRecipe(results.baseUrl + result.link)">{{result.title}}</a></h6>
+      </div>
+    </div>
   </div>
+  <div class="col-md-6" data-ng-show="recipe">
+    <div data-ng-hide="true" id="json" >
+      {{recipe}}
+    </div>
+    <div id="recipeDetail">
+      <h3>{{recipe.result.title}}</h3>
+      <p>Temps de préparation : {{recipe.result.prepTime}} min</p>
+      <p>Temps de cuisson : {{recipe.result.cookingTime}} min</p>
+      <p>{{recipe.result.description}}</p>
+    </div>
+  </div>
+  <div class="col-md-3" data-ng-show="recipe">
+    <label class="col-xs-12">Nombre de personne</label> <input type="text" data-ng-value="recipe.result.contenu.nbrPersons"/>
+    <div id="ingredients" class="row" data-ng-repeat="ingredient in recipe.result.contenu.ingredients">
+      <div class="col-md-8"><h6>{{ingredient.product}}</h6></div>
+      <div class="col-md-4"><h6>{{ingredient.quantity}} {{ingredient.unity}} </h6></div>
+    </div>
+  <div>
 
 </div>
 

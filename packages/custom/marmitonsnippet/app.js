@@ -18,9 +18,9 @@ Marmitonsnippet.register(function(app, auth, database) {
 
   //We are adding a link to the main menu for all authenticated users
   Marmitonsnippet.menus.add({
-    title: 'Marmiton Search',
+    title: 'Recherche de recette',
     link: 'marmiton search',
-    roles: ['authenticated'],
+    roles: ['anonymous'],
     menu: 'main'
   });
   
