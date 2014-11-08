@@ -18,8 +18,8 @@ Marmitonsnippet.register(function(app, auth, database) {
 
   //We are adding a link to the main menu for all authenticated users
   Marmitonsnippet.menus.add({
-    title: 'Marmiton Snippet',
-    link: 'Marmiton Snippet',
+    title: 'Marmiton Search',
+    link: 'marmiton search',
     roles: ['authenticated'],
     menu: 'main'
   });

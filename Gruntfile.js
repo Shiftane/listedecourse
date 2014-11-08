@@ -86,6 +86,12 @@ module.exports = function(grunt) {
         logConcurrentOutput: true
       }
     },
+    external_daemon: {
+      mongodb: {
+        cmd: '/Users/Thierry/dev/mongodb/bin/mongod',
+        args: []
+      }
+    },
     mochaTest: {
       options: {
         reporter: 'spec',
@@ -112,12 +118,13 @@ module.exports = function(grunt) {
 
   //Load NPM tasks
   require('load-grunt-tasks')(grunt);
+  grunt.loadNpmTasks('grunt-external-daemon');
 
   //Default task(s).
   if (process.env.NODE_ENV === 'production') {
-    grunt.registerTask('default', ['clean', 'cssmin', 'uglify', 'concurrent']);
+    grunt.registerTask('default', ['clean', 'cssmin', 'uglify', 'external_daemon', 'concurrent']);
   } else {
-    grunt.registerTask('default', ['clean', 'jshint', 'csslint', 'concurrent']);
+    grunt.registerTask('default', ['clean', 'jshint', 'csslint', 'external_daemon', 'concurrent']);
   }
 
   //Test task.
