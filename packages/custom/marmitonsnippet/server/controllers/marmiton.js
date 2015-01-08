@@ -12,15 +12,22 @@ var
 
 
 
-var url = 'http://www.marmiton.org/recettes/recherche.aspx?s=';
+var url = 'http://www.marmiton.org/recettes/recherche.aspx?aqt=';
 
 
 // PARSING PLACEHOLDER
 var resultsPath = 'div.m_item.recette_classique';
 var recettePath = 'div.m_bloc_cadre';
-var unities = ['cuillère à café', ' kg ',' g ', ' louche ', ' louches ', ' cube ', 'feuilles', 'ml', 'pot', ' petit pot ', 'litre', 'cuillère à soupe', 'cuillères à soupe', ' dosette ', ' gousses ', ' gousse ', ' quelque ', ' quelques ', ' paquet ', ' cl ', ' pincée '];
-var separator = ['de', 'd\'', 'du'];
 var titlePlaceHolder = 'h1.m_title span.fn';
+var prepTimePlaceHolder = 'span.preptime';
+var cookTimePlaceHolder = 'span.cooktime';
+var descriptionPlaceHolder = 'div.m_content_recette_todo';
+
+
+// UNITIES AND SEPARATOR FOR PARSER
+var unities = ['cuillère à café', ' cuillères à café ', ' kg ',' g ', ' louche ', ' louches ', ' cube ', 'feuilles', 'ml', 'pot', ' petit pot ', 'litre', 'cuillère à soupe', 'cuillères à soupe', ' dosette ', ' gousses ', ' gousse ', ' quelque ', ' quelques ', ' paquet ', ' cl ', ' pincée '];
+var separator = ['de', 'd\'', 'du'];
+var minmaxSeparator = 'à';
 
 var evalQuantity = function(quantityStr){
   /*
@@ -64,9 +71,9 @@ exports.getRecette = function(req, res) {
     var recette = $(recettePath); //use your CSS selector here
     var newRecipe = {};
     newRecipe.title = $(titlePlaceHolder,recette).text().trim();
-    newRecipe.prepTime = $('span.preptime', recette).text().trim();
-    newRecipe.cookingTime = $('span.cooktime', recette).text().trim();
-    newRecipe.description = $('div.m_content_recette_todo').text().trim();
+    newRecipe.prepTime = $(prepTimePlaceHolder, recette).text().trim();
+    newRecipe.cookingTime = $(cookTimePlaceHolder, recette).text().trim();
+    newRecipe.description = $(descriptionPlaceHolder).text().trim();
     var nbrPersons = $('p.m_content_recette_ingredients > span', recette).text().substring(17,19).trim();
     $('p.m_content_recette_ingredients span', recette).remove();
     var ingredientsStr = $('p.m_content_recette_ingredients', recette).text().trim().split('-');
@@ -91,8 +98,16 @@ exports.getRecette = function(req, res) {
           // IF UNITY EXIST
           ingredient.unity = ingredientStr.substring(resultIndex, resultIndex + unity.length).trim();
           if(resultIndex !== 0){
+            // get only the quantity part
+            var quantityStr = ingredientStr.substring(0, resultIndex).trim();
+            // FIND a "à"" in the middle to separate min and max value
+            // ex. "250 à 300 gr de confiture"
+            var startIndex = 0;
+            if(quantityStr.indexOf(minmaxSeparator) > -1){
+              startIndex = quantityStr.indexOf(minmaxSeparator)+1;
+            }
             try{
-              ingredient.quantity = eval(ingredientStr.substring(0, resultIndex).trim());
+              ingredient.quantity = eval(quantityStr.substring(startIndex, quantityStr.length).trim());
             }catch(e){
               console.log(e);
             }
@@ -166,7 +181,9 @@ exports.getRecette = function(req, res) {
  */
 exports.searchMarmiton = function(req, res) {
   var searchTerm = req.params.q;
-  var urlMarmiton = url + searchTerm + '&type=all';
+  //var urlMarmiton = url + searchTerm + '&type=all';
+  console.log('SearchTerm : ' + searchTerm);
+  var urlMarmiton = url + searchTerm.replace(' ', '-');
   console.log('Try to reach : ' + urlMarmiton);
   
   var options = {
@@ -182,7 +199,8 @@ exports.searchMarmiton = function(req, res) {
     var $ = cheerio.load(body);
     //console.log('BODY PARSED BY CHEERIO : ' + body);
     var results = $(resultsPath); //use your CSS selector here
-    console.log('Results Nbr with '+resultsPath+' : ' + results);
+    console.log('Results : ' + results);
+    console.log('Results in DOM '+results.length);
     
     $(results).each(function(i, link){
       var newRecipe = {};
@@ -194,6 +212,7 @@ exports.searchMarmiton = function(req, res) {
       newRecipe.text = $('div.m_texte_resultat', link).text().trim();
       result.push(newRecipe);
     });
+    console.log('Results Parsed '+result.length);
     var response = {
         origin : 'Marmiton',
         baseUrl : 'http://www.marmiton.org',

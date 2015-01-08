@@ -1,39 +1,111 @@
 <div class="" data-ng-controller="MarmitonsnippetController">
-  <div class="text-center col-md-12 row">
-    <form novalidate class="form-inline" data-ng-submit="search()" name="searchForm">
-      <div class="col-xs-6 text-right">
-        <input type="text" class="form-control" data-ng-model="query" placeholder="recette, ingrédient, etc." />
-      </div>
-      <div class="col-xs-6 text-left">
-        <button type="submit" class="btn btn-info form-control">Trouver une recette</button>
-      </div>
-    </form>
-  </div>
-  <div class="col-md-3 results" data-ng-show="results.result">
-    <div data-ng-repeat="result in results.result" class="">
-      <div class="">
-          <h6><a data-ng-click="getRecipe(results.baseUrl + result.link)">{{result.title}}</a></h6>
-      </div>
+  <div class="container">
+  <form novalidate class="form-inline" data-ng-submit="search()" name="searchForm">
+    <div class="row">
+      <div class="col-lg-5">
+              <div class="input-group custom-search-form col-lg-12">
+                <input type="text" class="form-control" data-ng-model="query" placeholder="recette, ingrédient, etc.">
+                <span class="input-group-btn">
+                <button class="btn btn-default" type="button">
+                <span class="glyphicon glyphicon-search"></span>
+               </button>
+               </span>
+               </div><!-- /input-group -->
+          </div>
     </div>
-  </div>
-  <div class="col-md-6" data-ng-show="recipe">
-    <div data-ng-hide="true" id="json" >
-      {{recipe}}
-    </div>
-    <div id="recipeDetail">
-      <h3>{{recipe.result.title}}</h3>
-      <p>Temps de préparation : {{recipe.result.prepTime}} min</p>
-      <p>Temps de cuisson : {{recipe.result.cookingTime}} min</p>
-      <p>{{recipe.result.description}}</p>
-    </div>
-  </div>
-  <div class="col-md-3" data-ng-show="recipe">
-    <label class="col-xs-12">Nombre de personne</label> <input type="text" data-ng-value="recipe.result.contenu.nbrPersons"/>
-    <div id="ingredients" class="row" data-ng-repeat="ingredient in recipe.result.contenu.ingredients">
-      <div class="col-md-8"><h6>{{ingredient.product}}</h6></div>
-      <div class="col-md-4"><h6>{{ingredient.quantity}} {{ingredient.unity}} </h6></div>
-    </div>
-  <div>
-
+  </form>
 </div>
+<div class="row">
+        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 text-align-left" data-ng-show="results.result">
+            <div class="box">
+                <div class="box-icon">
+                    <span class="fa fa-4x fa-html5"></span>
+                </div>
+                <div class="info box-results">
+                    <h4 class="text-center">Résultats</h4>
+                    <ul class="box-scroll">
+                      <li data-ng-repeat="result in results.result" class="">
+                            <a data-ng-click="getRecipe(results.baseUrl + result.link)">{{result.title}}</a>
+                      </li>
+                    </ul>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div data-ng-show="recipe" class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+            <div class="box">
+                <div class="box-icon">
+                    <span class="fa fa-4x fa-css3"></span>
+                </div>
+                <div class="info">
+                    <h4 class="text-center">{{recipe.result.title}}</h4>
+                    <p>Temps de préparation : {{recipe.result.prepTime}} min</p>
+                    <p>Temps de cuisson : {{recipe.result.cookingTime}} min</p>
+                    <p>{{recipe.result.description}}</p>
+                </div>
+            </div>
+        </div>
+      
+      
+      <div data-ng-show="recipe" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="box">
+                <div class="box-icon">
+                    <span class="fa fa-4x fa-css3"></span>
+                </div>
+                <div class="info">
+                    <h4 class="text-center">Ingredients</h4>
+                    <div id="peopleNumber" class="row">
+                      <form name="quantitiesChange" class="css-form">
+                        <div>
+                          <button class="btn btn-primary" data-ng-click="quantitiesChange.nbrPersons.$valid && !quantitiesChange.nbrPersons.$error.min && saveRecetteInListeDeCourse()">Ajouter ces ingrédient à ma liste de course</button>
+                        </div>
+                        <br/><br/>
+                        <div class="control-group">
+                          <label class="col-md-7">Personnes</label> 
+                          <input type="number" class="col-md-5" focus="true " class="form-control" name="nbrPersons" min="1" data-ng-change="quantitiesChange.nbrPersons.$valid && !quantitiesChange.nbrPersons.$error.min && updateQuantities()" required data-ng-model="newNbrPersons" data-ng-value="recipe.result.contenu.nbrPersons"/>
+                        </div>
+                      </form>
+                    </div>
+                    <div id="ingredients" class="row" data-ng-repeat="ingredient in recipe.result.contenu.ingredients">
+                    <div class="col-md-7">{{ingredient.product}}</div>
+                    <div class="col-md-5">{{ingredient.quantity | number:1}} {{ingredients.unity}} </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+  </div>
+
+
+  <div class="row col-lg-12" data-ng-show="listedecourse.recettes">
+      <div class="row col-lg-2" data-ng-repeat="(index, recettes) in listedecourse.recettes" >
+        <button ng-click="show($index)">
+          {{recettes.title}}
+        </button>
+      </div>
+      <div class="row col-lg-1" data-ng-show="listedecourse.recettes">
+        <button ng-click="allIngredients=true;recetteToShow=false">All</button>
+      </div>
+  </div>
+  <div class="row col-lg-12" data-ng-show="listedecourse.recettes">
+      <div collapse="isCollapsed[index]" data-ng-show="recetteToShow">
+        <div>
+          <label>{{recetteToShow.title}} {{recetteToShow.contenu.nbrPersons}} Personne(s)</label>
+          <div data-ng-repeat="ingredient in recetteToShow.contenu.ingredients">
+            {{ingredient.product}} | {{ingredient.quantity | number:1}} {{ingredient.unity}}
+          </div>
+        </div>
+      </div>
+      <div data-ng-show="allIngredients">
+        <div class="table-responsive">
+          <table data-ng-repeat="recette in listedecourse.recettes" class="table">
+            <tr data-ng-repeat="ingredient in recette.contenu.ingredients | orderBy:'product':false">
+              <td>{{ingredient.product}}</td><td>{{ingredient.quantity | number:1}} {{ingredient.unity}}</td><td>{{recette.title}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+  </div>
+</div>
+
 
