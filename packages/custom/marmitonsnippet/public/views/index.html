@@ -63,13 +63,15 @@
                         <br/><br/>
                         <div class="control-group">
                           <label class="col-md-7">Personnes</label> 
-                          <input type="number" class="col-md-5" focus="true " class="form-control" name="nbrPersons" min="1" data-ng-change="quantitiesChange.nbrPersons.$valid && !quantitiesChange.nbrPersons.$error.min && updateQuantities()" required data-ng-model="newNbrPersons" data-ng-value="recipe.result.contenu.nbrPersons"/>
+                          
+                          <input type="hidden" data-ng-model="oldNbrPersons"/>
+                          <input type="number" class="col-md-5" focus="true " class="form-control" name="nbrPersons" min="1" data-ng-change="quantitiesChange.nbrPersons.$valid && !quantitiesChange.nbrPersons.$error.min && updateQuantities()" required data-ng-model="newNbrPersons"/>
                         </div>
                       </form>
                     </div>
                     <div id="ingredients" class="row" data-ng-repeat="ingredient in recipe.result.contenu.ingredients">
                     <div class="col-md-7">{{ingredient.product}}</div>
-                    <div class="col-md-5">{{ingredient.quantity | number:1}} {{ingredients.unity}} </div>
+                    <div class="col-md-5">{{ingredient.quantity | number:1}} {{ingredient.unity}} </div>
                   </div>
                 </div>
             </div>
@@ -99,6 +101,9 @@
       <div data-ng-show="allIngredients">
         <div class="table-responsive">
           <table data-ng-repeat="recette in listedecourse.recettes" class="table">
+            <tr>
+            <th>Nom</th><th>Quantité</th><th>Unité</th>
+            </tr>
             <tr data-ng-repeat="ingredient in recette.contenu.ingredients | orderBy:'product':false">
               <td>{{ingredient.product}}</td><td>{{ingredient.quantity | number:1}} {{ingredient.unity}}</td><td>{{recette.title}}</td>
             </tr>

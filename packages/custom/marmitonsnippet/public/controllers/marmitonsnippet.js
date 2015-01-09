@@ -25,26 +25,28 @@ angular.module('mean.marmitonsnippet').controller('MarmitonsnippetController', [
     		  success(function(data, status, headers, config) {
     		  	$scope.recipe = data;
     		  	$log.info($scope.recipe);
-                $scope.newNbrPersons = $scope.recipe.result.contenu.nbrPersons;
+                $scope.newNbrPersons = parseInt($scope.recipe.result.contenu.nbrPersons);
+                $scope.oldNbrPersons = parseInt($scope.recipe.result.contenu.nbrPersons);
+                $log.info('newNbrPersons : ' + $scope.recipe.result.contenu.nbrPersons);
     		  }).
     		  error(function(data, status, headers, config) {
     		    
     		 });
         };
         $scope.updateQuantities = function(newNbrPersons){
-        	var nbrPersons = $scope.recipe.result.contenu.nbrPersons;
+        	var nbrPersons = $scope.oldNbrPersons;
         	$log.info('NbrPersons : ' + nbrPersons + ' New : ' + this.newNbrPersons);
-        	var inputNbrPersons = this.newNbrPersons;
+        	var inputNbrPersons = $scope.newNbrPersons;
         	$scope.recipe.result.contenu.ingredients.forEach(function(element, index){
         		var quantity = element.quantity / nbrPersons * inputNbrPersons;
         		$log.info('new Final quantity for ' + element.product + ' = ' + quantity);
         		element.quantity = quantity;
         	});
-        	$scope.recipe.result.contenu.nbrPersons = this.newNbrPersons;
-        	
+        	$scope.oldNbrPersons = inputNbrPersons;
         };
         $scope.saveRecetteInListeDeCourse = function(){
         	if($scope.listedecourse){
+                $scope.recipe.result.contenu.nbrPersons = $scope.newNbrPersons;
         		$scope.listedecourse.recettes.push($scope.recipe.result);
         		$log.info('Je vais mettre à jour cette liste d\'ingrédients : ' + $scope.listedecourse._id );
         		$http.put('/listedecourses/'+$scope.listedecourse._id, $scope.listedecourse).
