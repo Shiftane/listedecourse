@@ -17,7 +17,7 @@
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     text-align: left;
     display: block;
-    margin-top: 40px;
+    margin-top: 5px;
     height: auto;
 }
 .box-icon {
@@ -52,7 +52,7 @@
 }
 .info p{
     margin : 10px 10px 10px 10px;
-    font-size: 10px;
+    font-size: 11px;
 
 }
 .info > a {
@@ -72,9 +72,27 @@
 /* END BOX */
 
 .box-results{
-	height : 300px;
+	height : 100%;
 }
 
 .box-scroll{
 	overflow : scroll;
+}
+
+.no-gutter > [class*='col-'] {
+    padding-right:0;
+    padding-left:0;
+}
+
+.img-result{
+	transform: rotate(-90deg);
+	width: 16px;
+}
+.cell-img-result{
+	padding : 0px;
+}
+
+
+.ingredient{
+	font-size: 11px;
 }

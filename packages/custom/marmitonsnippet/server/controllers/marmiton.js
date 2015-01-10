@@ -13,6 +13,7 @@ var
 
 
 var url = 'http://www.marmiton.org/recettes/recherche.aspx?aqt=';
+var logoUrl = 'http://images.marmitoncdn.org/Skins/1/Common/Images/favicon.ico';
 
 
 // PARSING PLACEHOLDER
@@ -25,7 +26,7 @@ var descriptionPlaceHolder = 'div.m_content_recette_todo';
 
 
 // UNITIES AND SEPARATOR FOR PARSER
-var unities = ['cuillère à café', ' cuillères à café ', ' kg ',' g ', ' louche ', ' louches ', ' cube ', 'feuilles', 'ml', ' pot ', ' petit pot ', ' litre ', 'cuillère à soupe', 'cuillères à soupe', ' dosette ', ' gousses ', ' gousse ', ' quelque ', ' quelques ', ' paquet ', ' cl ', ' pincée '];
+var unities = ['cuillère à café', ' grosses cuillères à café ', ' cuillères à café ', ' kg ',' g ', ' louche ', ' louches ', ' cube ', 'feuilles', 'ml', ' pot ', ' petit pot ', ' litre ', 'cuillère à soupe', 'cuillères à soupe', ' dosette ', ' gousses ', ' gousse ', ' quelque ', ' quelques ', ' paquet ', ' cl ', ' pincée '];
 var separator = ['de', 'd\'', 'du'];
 var minmaxSeparator = 'à';
 
@@ -73,6 +74,7 @@ exports.getRecette = function(req, res) {
     newRecipe.title = $(titlePlaceHolder,recette).text().trim();
     newRecipe.prepTime = $(prepTimePlaceHolder, recette).text().trim();
     newRecipe.cookingTime = $(cookTimePlaceHolder, recette).text().trim();
+    newRecipe.image = $('a.m_content_recette_illu > img', recette).attr('src');
     newRecipe.description = $(descriptionPlaceHolder).text().trim();
     var nbrPersons = $('p.m_content_recette_ingredients > span', recette).text().substring(17,19).trim();
     $('p.m_content_recette_ingredients span', recette).remove();
@@ -167,6 +169,8 @@ exports.getRecette = function(req, res) {
     
     var response = {
         origin : 'Marmiton',
+        recipeUrl : recetteUrl,
+        logoUrl : logoUrl,
         message: 'Parsing finished',
         result: newRecipe,
         status: 'success'
@@ -215,6 +219,7 @@ exports.searchMarmiton = function(req, res) {
     console.log('Results Parsed '+result.length);
     var response = {
         origin : 'Marmiton',
+        logoUrl : logoUrl,
         baseUrl : 'http://www.marmiton.org',
         message: 'Parsing finished',
         result: result,
