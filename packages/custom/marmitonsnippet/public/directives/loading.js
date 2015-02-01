@@ -2,7 +2,7 @@ angular.module('directive.loading', [])
 
     .directive('loading',   ['$http' ,function ($http)
     {
-        "use strict";
+        'use strict';
         return {
             restrict: 'A',
             link: function (scope, elm, attrs)

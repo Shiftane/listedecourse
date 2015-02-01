@@ -3709,6 +3709,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 @media (min-width: 768px) {
   .navbar-static-top {
     border-radius: 0;
+    margin : 10px;
   }
 }
 .navbar-fixed-top,
@@ -3717,11 +3718,13 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   right: 0;
   left: 0;
   z-index: 1030;
+  margin : 10px;
 }
 @media (min-width: 768px) {
   .navbar-fixed-top,
   .navbar-fixed-bottom {
     border-radius: 0;
+    margin : 10px;
   }
 }
 .navbar-fixed-top {

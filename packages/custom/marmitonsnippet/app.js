@@ -17,12 +17,12 @@ Marmitonsnippet.register(function(app, auth, database) {
   Marmitonsnippet.routes(app, auth, database);
 
   //We are adding a link to the main menu for all authenticated users
-  Marmitonsnippet.menus.add({
+  /*Marmitonsnippet.menus.add({
     title: 'Recherche de recette',
     link: 'marmiton search',
     roles: ['anonymous'],
     menu: 'main'
-  });
+  });*/
   
   Marmitonsnippet.aggregateAsset('css', 'marmitonsnippet.css');
 

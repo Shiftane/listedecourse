@@ -2,8 +2,8 @@
 
 angular.module('mean.listedecourse').config(['$stateProvider',
   function($stateProvider) {
-    $stateProvider.state('listedecourse example page', {
-      url: '/listedecourse/example',
+    $stateProvider.state('Homepage', {
+      url: '/listedecourse/home',
       templateUrl: 'listedecourse/views/index.html'
     });
   }

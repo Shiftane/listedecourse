@@ -17,13 +17,14 @@ Listedecourse.register(function(app, auth, database) {
   Listedecourse.routes(app, auth, database);
 
   //We are adding a link to the main menu for all authenticated users
-  /*Listedecourse.menus.add({
-    title: 'listedecourse example page',
-    link: 'listedecourse example page',
-    roles: ['authenticated'],
-    menu: 'main'
+  Listedecourse.menus.add({
+    title: 'Liste de course',
+    link: 'Homepage',
+    roles: ['anonymous']
+    /*,
+    menu: 'main'*/
   });
-  */
+  
   Listedecourse.aggregateAsset('css', 'listedecourse.css');
 
   /**
