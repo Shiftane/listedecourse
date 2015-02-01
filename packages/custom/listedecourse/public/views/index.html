@@ -1,13 +1,13 @@
 <div class="" data-ng-controller="ListedecourseController" data-ng-init="showPopupBasket=false">
   <div class="container">
-    <div class="navbar-static-top navbar-fixed-top">
+    <div class="navbar-static-top navbar-fixed-top menu-top">
       <!-- SEARCH BOX -->
       <div class="col-xs-6 col-sm-9 col-md-9 col-lg-9">
         <form novalidate class="form-inline" data-ng-submit="search()" name="searchForm">
           <div class="no-gutter">
             <div class="col-lg-12">
                     <div class="input-group custom-search-form col-lg-12">
-                    <!--<span class="input-group-addon"><img src="/favicon.ico">ListedeCourse.ch</span>-->
+                    <span class="input-group-addon"><!--<img src="/favicon.ico">-->LISTDECOURSE.CH</span>
                     <input type="text" class="form-control" data-ng-model="query" placeholder="recette, ingrédient, etc.">
                     <span class="input-group-btn">
                       <button class="btn btn-default" type="button">
@@ -73,7 +73,6 @@
       <div data-ng-show="recipe" class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
         <div class="box">
             <div class="info row">
-              <p>
                 <form name="quantitiesChange" class="css-form">
                   <div class="text-center">
                         <button class="btn btn-success" data-ng-click="quantitiesChange.nbrPersons.$valid && !quantitiesChange.nbrPersons.$error.min && saveRecetteInListeDeCourse()">
@@ -81,7 +80,7 @@
                           Ajouter à ma liste
                         </button>
                   </div>
-                  <div id="peopleNumber" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <div id="peopleNumber" class="nbr-people col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     
                       <div class="control-group">
                         <label class="col-md-7">Personnes</label> 
@@ -92,16 +91,17 @@
                     
                   </div>
                 </form>
-                <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" data-ng-repeat="ingredient in recipe.result.contenu.ingredients">
+                <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 ingredient-list" data-ng-repeat="ingredient in recipe.result.contenu.ingredients">
                     <div class="col-md-7">{{ingredient.product}}</div>
                     <div class="col-md-5">{{ingredient.quantity | number:1}} {{ingredient.unity}} </div>
                 </div>
-              </p>
             </div>
         </div>
       </div>
     </div>  
   </div>
+
+  <!-- LIST OF INGREDIENTS AND RECIPES-->
   <div class="ingredient row col-lg-4" data-ng-show="showPopupBasket" data-ng-init="allRecettes=true">
     <div class="col-lg-4" data-ng-show="listedecourse.recettes">
       <button ng-click="allIngredients=false;allRecettes=true" class="btn btn-primary btn-sm">
