@@ -1,26 +1,69 @@
+/*
+@font-face {
+    font-family: "Philosopher";
+    src: url('../fonts/Philosopher-Regular.ttf');
+}
+@font-face {
+    font-family: "Philosopher";
+    font-style: italic;
+    src: url('../fonts/Philosopher-Italic.ttf');
+}
+@font-face {
+    font-family: "Philosopher";
+    font-weight: bold;
+    src: url('../fonts/Philosopher-Bold.ttf');
+}
+@font-face {
+    font-family: "Philosopher";
+    font-weight: bold;
+    font-style: italic;
+    src: url('../fonts/Philosopher-BoldItalic.ttf');
+}
+*/
+@media (min-width: 768px) {
+  .container {
+    width: 100%;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    width: 100%;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 100%;
+  }
+}
+
 .resultSearch li{
 	list-style-type: square;
 	padding-left : 3px;
 	margin-bottom : 10px;
-	border-bottom: 1px solid #777;
 }
 
 .center{
-	margin-top : 55px;
+	margin-top : 45px;
 }
 .container{
-	margin-left : 0;
-	margin-right : 0;
+	margin: 0;
+	/*font-family : 'Philosopher';*/
+}
+.menu-top{
+	padding : 10px;	
+	background-color: white;
+	border-bottom: 2px solid #DDD;
 }
 
 /* BOX */
-/*
+
 .box {
     border-radius: 3px;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     text-align: left;
     display: block;
     margin-top: 5px;
+    margin-bottom: 10px;
     height: auto;
 }
 .box-icon {
@@ -72,7 +115,7 @@
     color: #fff;
     transition: all 0.5s ease 0s;
 }
-*/
+
 /* END BOX */
 
 .box-results{
@@ -95,7 +138,7 @@
 .cell-img-result{
 	padding : 1px;
 }
-/*
+
 
 .ingredient{
 	border-radius: 3px;
@@ -109,4 +152,13 @@
 	right: 140px;
 	background-color: #fff;
 }
-*/
+
+.ingredient-list{
+	font-size: 12px;
+	padding  : 10px;
+	margin-left : 15px;
+}
+
+.nbr-people{
+	margin : 20px;
+}
