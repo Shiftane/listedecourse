@@ -740,17 +740,17 @@ pre code {
 }
 @media (min-width: 768px) {
   .container {
-    width: 100%;
+    width: 750px;
   }
 }
 @media (min-width: 992px) {
   .container {
-    width: 100%;
+    width: 970px;
   }
 }
 @media (min-width: 1200px) {
   .container {
-    width: 100%;
+    width: 1170px;
   }
 }
 .container-fluid {
@@ -3709,7 +3709,6 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 @media (min-width: 768px) {
   .navbar-static-top {
     border-radius: 0;
-    margin : 10px;
   }
 }
 .navbar-fixed-top,
@@ -3718,13 +3717,11 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   right: 0;
   left: 0;
   z-index: 1030;
-  margin : 10px;
 }
 @media (min-width: 768px) {
   .navbar-fixed-top,
   .navbar-fixed-bottom {
     border-radius: 0;
-    margin : 10px;
   }
 }
 .navbar-fixed-top {
@@ -3750,7 +3747,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 @media (min-width: 768px) {
   .navbar > .container .navbar-brand,
   .navbar > .container-fluid .navbar-brand {
-    margin-left: 0px;
+    margin-left: -15px;
   }
 }
 .navbar-toggle {
