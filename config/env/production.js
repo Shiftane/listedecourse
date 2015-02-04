@@ -28,7 +28,7 @@ module.exports = {
     */
   },
   app: {
-    name: 'MEAN - A Modern Stack - Production'
+    name: 'Listedecourse.ch - Votre liste de course grâce aux recettes'
   },
   facebook: {
     clientID: 'APP_ID',
@@ -48,7 +48,7 @@ module.exports = {
   google: {
     clientID: '1014971847258-tpdr9q69055dg5qorgssdtgbhk1dgcf0.apps.googleusercontent.com',
     clientSecret: 'O993PoKTSwuemWBIo_huCSCw',
-    callbackURL: 'http://localhost:3000/auth/google/callback'
+    callbackURL: 'http://http://stark-temple-4587.herokuapp.com/auth/google/callback'
   },
   linkedin: {
     clientID: 'API_KEY',
