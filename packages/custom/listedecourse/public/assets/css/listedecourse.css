@@ -167,3 +167,7 @@
 	overflow-y: auto;
 	overflow-x: hidden; 
 }
+
+.row {
+	margin : 0;
+}
