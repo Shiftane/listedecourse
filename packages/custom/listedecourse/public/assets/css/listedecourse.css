@@ -23,23 +23,20 @@
 @media (min-width: 768px) {
   .container {
     width: 100%;
+    padding-left:0;
   }
 }
 @media (min-width: 992px) {
   .container {
     width: 100%;
+    padding-left:0;
   }
 }
 @media (min-width: 1200px) {
   .container {
     width: 100%;
+    padding-left:0;
   }
-}
-
-.resultSearch li{
-	list-style-type: square;
-	padding-left : 3px;
-	margin-bottom : 10px;
 }
 
 .center{
@@ -123,7 +120,8 @@
 }
 
 .box-scroll{
-	overflow : scroll;
+	overflow-y: scroll;
+	overflow-x: hidden;
 }
 
 .no-gutter > [class*='col-'] {
@@ -161,4 +159,11 @@
 
 .nbr-people{
 	margin : 20px;
+}
+
+.search-results{
+	padding-left : 0;
+	height:100%;
+	overflow-y: auto;
+	overflow-x: hidden; 
 }

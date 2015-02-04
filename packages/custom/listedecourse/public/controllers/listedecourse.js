@@ -8,7 +8,8 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
       name: 'listedecourse'
     };
     	$scope.results = [];
-
+		$scope.NumberOfRecipe = 0;
+		$scope.NumberOfIngredient = 0;
         $scope.search = function(){
             
         	$log.info('Search for query : ' + this.query);
@@ -57,10 +58,12 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
     			  success(function(data, status, headers, config) {
     			  	$log.info('SUPER CA MARCHE = ' + JSON.stringify(data));
     			  	$scope.listedecourse = data;
+    			  	$scope.NumberOfRecipe = $scope.listedecourse.recettes.length;
     			  }).
     			  error(function(data, status, headers, config) {
     			    $log.info('THATS SUCKS !!! = ' + JSON.stringify(data));
     			 });
+				//$scope.NumberOfIngredient = ;
         	}else{
         		var listedecourse = {};
         		listedecourse.name = 'Default';
@@ -71,11 +74,14 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
     			  success(function(data, status, headers, config) {
     			  	$log.info('SUPER CA MARCHE = ' + JSON.stringify(data));
     			  	$scope.listedecourse = data;
+    			  	$scope.NumberOfRecipe = $scope.listedecourse.recettes.length;
     			  }).
     			  error(function(data, status, headers, config) {
     			    $log.info('THATS SUCKS !!! = ' + JSON.stringify(data));
     			 });
+
     		}
+
         };
     	$scope.show = function(index){
             $log.info('Show me this recipe : ' + index);
