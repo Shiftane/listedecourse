@@ -48,7 +48,7 @@ module.exports = {
   google: {
     clientID: '1014971847258-tpdr9q69055dg5qorgssdtgbhk1dgcf0.apps.googleusercontent.com',
     clientSecret: 'O993PoKTSwuemWBIo_huCSCw',
-    callbackURL: 'http://http://stark-temple-4587.herokuapp.com/auth/google/callback'
+    callbackURL: 'http://stark-temple-4587.herokuapp.com/auth/google/callback'
   },
   linkedin: {
     clientID: 'API_KEY',
