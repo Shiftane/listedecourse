@@ -8,27 +8,26 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
       name: 'listedecourse'
     };
 
-    	$scope.items = ['item1', 'item2', 'item3'];
 
 	  	$scope.open = function (size) {
 
-	    var modalInstance = $modal.open({
-	      templateUrl: '/listedecourse/views/myModal.html',
-	      controller: 'ModalInstanceCtrl',
-	      size: size,
-	      resolve: {
-	        items: function () {
-	          return $scope.items;
-	        }
-	      }
-	    });
+		    var modalInstance = $modal.open({
+		      templateUrl: '/listedecourse/views/myModal.html',
+		      controller: 'ModalInstanceCtrl',
+		      size: size,
+		      resolve: {
+		        recipes: function () {
+		          return $scope.recipe;
+		        }
+		      }
+		    });
 
-	    modalInstance.result.then(function (selectedItem) {
-	      $scope.selected = selectedItem;
-	    }, function () {
-	      $log.info('Modal dismissed at: ' + new Date());
-	    });
-	  };
+		    modalInstance.result.then(function (selectedItem) {
+		      $scope.selected = selectedItem;
+		    }, function () {
+		      $log.info('Modal dismissed at: ' + new Date());
+		    });
+		};
 
     	$scope.results = [];
 		$scope.NumberOfRecipe = 0;

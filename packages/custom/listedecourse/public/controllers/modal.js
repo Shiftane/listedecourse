@@ -10,7 +10,7 @@ angular.module('mean.listedecourse').controller('ModalInstanceCtrl', function ($
   //   $modalInstance.close($scope.selected.item);
   // };
 
-  // $scope.cancel = function () {
-  //   $modalInstance.dismiss('cancel');
-  // };
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
 });
