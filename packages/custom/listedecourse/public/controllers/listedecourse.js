@@ -1,12 +1,35 @@
 /*global $:false */
 'use strict';
 
-angular.module('mean.listedecourse').controller('ListedecourseController', ['$scope', '$log', '$http', 'Global', 'Listedecourse',
-  function($scope, $log, $http, Global, Listedecourse) {
+angular.module('mean.listedecourse').controller('ListedecourseController', ['$scope', '$log', '$http', 'Global', 'Listedecourse','$modal',
+  function($scope, $log, $http, Global, Listedecourse, $modal) {
     $scope.global = Global;
     $scope.package = {
       name: 'listedecourse'
     };
+
+    	$scope.items = ['item1', 'item2', 'item3'];
+
+	  	$scope.open = function (size) {
+
+	    var modalInstance = $modal.open({
+	      templateUrl: '/listedecourse/views/myModal.html',
+	      controller: 'ModalInstanceCtrl',
+	      size: size,
+	      resolve: {
+	        items: function () {
+	          return $scope.items;
+	        }
+	      }
+	    });
+
+	    modalInstance.result.then(function (selectedItem) {
+	      $scope.selected = selectedItem;
+	    }, function () {
+	      $log.info('Modal dismissed at: ' + new Date());
+	    });
+	  };
+
     	$scope.results = [];
 		$scope.NumberOfRecipe = 0;
 		$scope.NumberOfIngredient = 0;
