@@ -148,19 +148,6 @@
 }
 
 
-.ingredient{
-	border-radius: 3px;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-	font-size: 11px;
-	position: absolute;
-	float: right;
-	z-index: 100;
-	height: auto;
-	top: 110px;
-	right: 140px;
-	background-color: #fff;
-}
-
 .ingredient-list{
 	font-size: 12px;
 	padding  : 10px;
@@ -181,4 +168,18 @@
 
 .row {
 	margin : 0;
+}
+
+.label-center{
+	vertical-align: middle;
+}
+span.input-group-addon{
+	cursor: pointer;
+	-webkit-user-select: none; /* Chrome/Safari */        
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+ */
+
+	/* Rules below not implemented in browsers yet */
+	-o-user-select: none;
+	user-select: none;
 }

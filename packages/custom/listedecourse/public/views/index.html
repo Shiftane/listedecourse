@@ -22,11 +22,11 @@
       </div>
       <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3 text-right">
           <div class="btn-group" role="group" aria-label="...">
-            <button type="button" class="btn btn-primary">{{NumberOfRecipe}} Recette(s)</button>
-            <button type="button" class="btn btn-primary" data-ng-click="open()">{{NumberOfIngredient}} Ingrédient(s) </button>
+            <button type="button" class="btn btn-primary" data-ng-click="open()">{{NumberOfRecipe}} Recette(s)</button>
+            <!-- <button type="button" class="btn btn-primary" data-ng-click="open()">{{NumberOfIngredient}} Ingrédient(s) </button>
             <button type="button" class="btn btn-primary" data-ng-click="showPopupBasket=!showPopupBasket">
               <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
-            </button>
+            </button>-->
           </div>
       </div>
     </div>
@@ -77,19 +77,20 @@
         <div class="box">
           <form name="quantitiesChange" class="css-form">
             <div class="info row">
-                <div class="text-center col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                      <button class="btn btn-success" data-ng-click="quantitiesChange.nbrPersons.$valid && !quantitiesChange.nbrPersons.$error.min && saveRecetteInListeDeCourse()">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                        Ajouter à ma liste
-                      </button>
-                </div>
-                <div class="nbr-people">
-                    <div class="control-group">
-                      <input type="number" class="col-xs-4 col-sm-5 col-md-6 col-lg-7" focus="true " class="form-control" name="nbrPersons" min="1" data-ng-change="quantitiesChange.nbrPersons.$valid && !quantitiesChange.nbrPersons.$error.min && updateQuantities()" required data-ng-model="newNbrPersons"/>
-                      <label class="col-xs-8 col-sm-7 col-md-6 col-lg-5">Personnes</label> 
-                    </div>
-                    <input type="hidden" data-ng-model="oldNbrPersons"/>
-                </div>
+                
+              <div class="nbr-people">
+                  <div class="control-group">
+                    <h-number value="input.num" step="1" min="1" class="col-xs-4 col-sm-5 col-md-6 col-lg-7"></h-number>
+                    <label class="col-xs-8 col-sm-7 col-md-6 col-lg-5 label-center">Personnes</label> 
+                  </div>
+                  <input type="hidden" data-ng-model="oldNbrPersons"/>
+              </div>
+              <div class="text-center col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <button class="btn btn-success" data-ng-click="saveRecetteInListeDeCourse()">
+                  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                  Ajouter à ma liste
+                </button>
+              </div>
               <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 ingredient-list" data-ng-repeat="ingredient in recipe.result.contenu.ingredients">
                   <div class="col-md-7">{{ingredient.product}}</div>
                   <div class="col-md-5">{{ingredient.quantity | number:1}} {{ingredient.unity}} </div>
@@ -101,55 +102,7 @@
     </div>  
   </div>
 
-  <!-- LIST OF INGREDIENTS AND RECIPES-->
-  <div class="ingredient row col-lg-4" data-ng-show="showPopupBasket" data-ng-init="allRecettes=true">
-    <div class="col-lg-4" data-ng-show="listedecourse.recettes">
-      <button ng-click="allIngredients=false;allRecettes=true" class="btn btn-primary btn-sm">
-        <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
-        Par recette
-      </button>
-    </div>
-    <div class="col-lg-4" data-ng-show="listedecourse.recettes">
-      <button ng-click="allRecettes=false;allIngredients=true" class="btn btn-primary btn-sm">
-      <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>
-      Par ingrédient
-      </button>
-    </div>
-    <div class="col-lg-4" data-ng-show="listedecourse.recettes">
-      <button class="btn btn-success btn-sm" ng-click="printDiv('printableArea');">
-      <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
-      Imprimer
-      </button>
-    </div>
-    <div class="col-lg-12" data-ng-show="listedecourse.recettes">
-      <div id="printableArea">
-        <div data-ng-show="allRecettes">
-            <div data-ng-repeat="recette in listedecourse.recettes" class="table">
-              <div >
-                <h3>{{recette.title}} {{recette.contenu.nbrPersons}} Personne(s)</h3>
-              </div>
-              <div data-ng-repeat="ingredient in recette.contenu.ingredients">
-                {{ingredient.product}} | {{ingredient.quantity | number:1}} {{ingredient.unity}}
-              </div>
-            </div>
-        </div>
-
-        <div data-ng-show="allIngredients">
-          <div class="table-responsive">
-            <table data-ng-repeat="recette in listedecourse.recettes" class="table">
-            
-              <tr>
-              <th>Nom</th><th>Quantité/unité</th><th>Recette</th>
-              </tr>
-              <tr data-ng-repeat="ingredient in recette.contenu.ingredients | orderBy:'product':false">
-                <td>{{ingredient.product}}</td><td>{{ingredient.quantity | number:1}} {{ingredient.unity}}</td><td>{{recette.title}}</td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  
 </div>
 
 

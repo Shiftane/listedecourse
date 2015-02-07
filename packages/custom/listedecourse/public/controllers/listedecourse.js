@@ -1,7 +1,7 @@
 /*global $:false */
 'use strict';
 
-angular.module('mean.listedecourse').controller('ListedecourseController', ['$scope', '$log', '$http', 'Global', 'Listedecourse','$modal',
+angular.module('mean.listedecourse', ['angularNumberPicker']).controller('ListedecourseController', ['$scope', '$log', '$http', 'Global', 'Listedecourse','$modal',
   function($scope, $log, $http, Global, Listedecourse, $modal) {
     $scope.global = Global;
     $scope.package = {
@@ -16,8 +16,8 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
 		      controller: 'ModalInstanceCtrl',
 		      size: size,
 		      resolve: {
-		        recipes: function () {
-		          return $scope.recipe;
+		        listedecourse: function () {
+		          return $scope.listedecourse;
 		        }
 		      }
 		    });
@@ -52,7 +52,7 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
     		  success(function(data, status, headers, config) {
     		  	$scope.recipe = data;
     		  	$log.info($scope.recipe);
-                $scope.newNbrPersons = parseInt($scope.recipe.result.contenu.nbrPersons);
+                $scope.input.num = parseInt($scope.recipe.result.contenu.nbrPersons);
                 $scope.oldNbrPersons = parseInt($scope.recipe.result.contenu.nbrPersons);
                 $log.info('newNbrPersons : ' + $scope.recipe.result.contenu.nbrPersons);
     		  }).
@@ -60,17 +60,17 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
     		    
     		 });
         };
-        $scope.updateQuantities = function(newNbrPersons){
+        $scope.$watch('input.num', function(){
         	var nbrPersons = $scope.oldNbrPersons;
-        	$log.info('NbrPersons : ' + nbrPersons + ' New : ' + this.newNbrPersons);
-        	var inputNbrPersons = $scope.newNbrPersons;
+        	$log.info('NbrPersons : ' + nbrPersons + ' New : ' + $scope.input.num);
+        	var inputNbrPersons = $scope.input.num;
         	$scope.recipe.result.contenu.ingredients.forEach(function(element, index){
         		var quantity = element.quantity / nbrPersons * inputNbrPersons;
         		$log.info('new Final quantity for ' + element.product + ' = ' + quantity);
         		element.quantity = quantity;
         	});
         	$scope.oldNbrPersons = inputNbrPersons;
-        };
+        });
         $scope.saveRecetteInListeDeCourse = function(){
         	if($scope.listedecourse){
                 $scope.recipe.result.contenu.nbrPersons = $scope.newNbrPersons;
@@ -110,14 +110,6 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
             $scope.recetteToShow = $scope.listedecourse.recettes[index];  
             $scope.allIngredients = false;      
     	};
-
-        $scope.printDiv = function(divName) {
-            var printContents = document.getElementById(divName).innerHTML;    
-            var popupWin = window.open('', '_blank', 'width=500,height=800');
-            popupWin.document.open();
-            popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + printContents + '</html>');
-            popupWin.document.close();
-        };
 
         $scope.loading = function(divId){
             $('#' + divId).style('border','1px solid black');
