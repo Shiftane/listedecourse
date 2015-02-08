@@ -99,7 +99,7 @@ var parseRecette = function(body, recetteUrl){
   newRecipe.prepTime = $(prepTimePlaceHolder, recette).text().trim();
   newRecipe.cookingTime = $(cookTimePlaceHolder, recette).text().trim();
   newRecipe.image = $('a.m_content_recette_illu > img', recette).attr('src');
-  newRecipe.description = $(descriptionPlaceHolder).text().trim();
+  newRecipe.description = $(descriptionPlaceHolder).html();
   var nbrPersons = $('p.m_content_recette_ingredients > span', recette).text().substring(17,19).trim();
   $('p.m_content_recette_ingredients span', recette).remove();
   var ingredientsStr = $('p.m_content_recette_ingredients', recette).text().trim().split('-');

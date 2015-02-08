@@ -52,7 +52,7 @@
       
       <!-- RECIPE DESCRIPTION -->
       <div id="" data-ng-show="recipe" class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-        <div class="box">
+        <div class="">
             <div class="info">
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
                   <a href="{{recipe.recipeUrl}}" target="_blank"><img data-ng-src="{{results.logoUrl}}" class="img-responsive"></a>
@@ -63,8 +63,8 @@
                   <p>Temps de cuisson : {{recipe.result.cookingTime}} min</p>
 
                 </div>
-                <div>
-                  <p>{{recipe.result.description}}</p>
+
+                <div ng-bind-html="recipe.result.description">
                 </div>
                 <div class="">
                   <img data-ng-src="{{recipe.result.image}}" class="box-shadow center-block img-rounded img-responsive">
@@ -74,26 +74,26 @@
       </div>
       <!-- RECIPE INGREDIENTS -->
       <div data-ng-show="recipe" class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-        <div class="box">
+        <div class="recipe-ingredients">
           <form name="quantitiesChange" class="css-form">
-            <div class="info row">
-                
-              <div class="nbr-people">
-                  <div class="control-group">
-                    <h-number value="input.num" step="1" min="1" class="col-xs-4 col-sm-5 col-md-6 col-lg-7"></h-number>
-                    <label class="col-xs-8 col-sm-7 col-md-6 col-lg-5 label-center">Personnes</label> 
-                  </div>
-                  <input type="hidden" data-ng-model="oldNbrPersons"/>
-              </div>
+            <div class="row">
               <div class="text-center col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <button class="btn btn-success" data-ng-click="saveRecetteInListeDeCourse()">
                   <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                   Ajouter à ma liste
                 </button>
+              </div>  
+              <div class="nbr-people">
+                  <div class="control-group">
+                    <label class="col-xs-12 col-sm-12 col-md-12 col-lg-12 label-center">Nombre de Personnes</label> 
+                    <h-number value="num" step="1" min="1" class="col-xs-12 col-sm-12 col-md-12 col-lg-12"></h-number>
+                    
+                  </div>
+                  <input type="hidden" data-ng-model="oldNbrPersons"/>
               </div>
               <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 ingredient-list" data-ng-repeat="ingredient in recipe.result.contenu.ingredients">
-                  <div class="col-md-7">{{ingredient.product}}</div>
-                  <div class="col-md-5">{{ingredient.quantity | number:1}} {{ingredient.unity}} </div>
+                  <div class="col-xs-4 col-sm-5 col-md-6 col-lg-7">{{ingredient.product}}</div>
+                  <div class="col-xs-8 col-sm-7 col-md-6 col-lg-5">{{ingredient.quantity | number:1}} {{ingredient.unity}} </div>
               </div>
             </div>
           </form>

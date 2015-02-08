@@ -52,7 +52,7 @@ angular.module('mean.listedecourse', ['angularNumberPicker']).controller('Listed
     		  success(function(data, status, headers, config) {
     		  	$scope.recipe = data;
     		  	$log.info($scope.recipe);
-                $scope.input.num = parseInt($scope.recipe.result.contenu.nbrPersons);
+                $scope.num = parseInt($scope.recipe.result.contenu.nbrPersons);
                 $scope.oldNbrPersons = parseInt($scope.recipe.result.contenu.nbrPersons);
                 $log.info('newNbrPersons : ' + $scope.recipe.result.contenu.nbrPersons);
     		  }).
@@ -60,17 +60,21 @@ angular.module('mean.listedecourse', ['angularNumberPicker']).controller('Listed
     		    
     		 });
         };
-        $scope.$watch('input.num', function(){
+        
+        $scope.$watch('num', function(){
         	var nbrPersons = $scope.oldNbrPersons;
-        	$log.info('NbrPersons : ' + nbrPersons + ' New : ' + $scope.input.num);
-        	var inputNbrPersons = $scope.input.num;
-        	$scope.recipe.result.contenu.ingredients.forEach(function(element, index){
-        		var quantity = element.quantity / nbrPersons * inputNbrPersons;
-        		$log.info('new Final quantity for ' + element.product + ' = ' + quantity);
-        		element.quantity = quantity;
-        	});
-        	$scope.oldNbrPersons = inputNbrPersons;
+        	$log.info('NbrPersons : ' + nbrPersons + ' New : ' + $scope.num);
+        	var inputNbrPersons = $scope.num;
+        	if($scope.recipe){
+	        	$scope.recipe.result.contenu.ingredients.forEach(function(element, index){
+	        		var quantity = element.quantity / nbrPersons * inputNbrPersons;
+	        		$log.info('new Final quantity for ' + element.product + ' = ' + quantity);
+	        		element.quantity = quantity;
+	        	});
+	        	$scope.oldNbrPersons = inputNbrPersons;
+	        }
         });
+
         $scope.saveRecetteInListeDeCourse = function(){
         	if($scope.listedecourse){
                 $scope.recipe.result.contenu.nbrPersons = $scope.newNbrPersons;
