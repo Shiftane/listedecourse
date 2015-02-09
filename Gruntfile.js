@@ -88,7 +88,7 @@ module.exports = function(grunt) {
     },
     external_daemon: {
       mongodb: {
-        cmd: '/Users/Shiftane/Documents/dev/mongodb/bin/mongod --dbpath /Users/Shiftane/Documents/dev/mongodb/data/listedecourse',
+        cmd: '/Users/Shiftane/Documents/dev/mongodb/bin/mongod',
         args: []
       }
     },
