@@ -77,7 +77,7 @@ angular.module('mean.listedecourse', ['angularNumberPicker']).controller('Listed
 
         $scope.saveRecetteInListeDeCourse = function(){
         	if($scope.listedecourse){
-                $scope.recipe.result.contenu.nbrPersons = $scope.newNbrPersons;
+                $scope.recipe.result.contenu.nbrPersons = $scope.num;
         		$scope.listedecourse.recettes.push($scope.recipe.result);
         		$log.info('Je vais mettre à jour cette liste d\'ingrédients : ' + $scope.listedecourse._id );
         		$http.put('/listedecourses/'+$scope.listedecourse._id, $scope.listedecourse).
