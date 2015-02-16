@@ -24,8 +24,16 @@
 }
 .content {
     margin-top: 10px;
+    height: 100%;
     width: 100%
 }
+body{
+    height : 100%;
+}
+section{
+    height: 100%;
+}
+
 footer {
 	position: fixed;
 	left: 0;

@@ -51,9 +51,11 @@
 
 .center{
 	margin-top : 45px;
+    height:100%;
 }
 .container{
 	margin: 0;
+    height : 100%;
 	/*font-family : 'Philosopher';*/
 }
 .menu-top{
@@ -174,6 +176,10 @@
 
 .row {
 	margin : 0;
+}
+
+.full-height{
+    height: 100%;
 }
 
 .label-center{
