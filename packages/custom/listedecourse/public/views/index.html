@@ -63,8 +63,7 @@
                   <p>Temps de cuisson : {{recipe.result.cookingTime}} min</p>
 
                 </div>
-
-                <div ng-bind-html="recipe.result.description">
+                <div data-ng-bind-html="recipe.result.description">
                 </div>
                 <div class="">
                   <img data-ng-src="{{recipe.result.image}}" class="box-shadow center-block img-rounded img-responsive">
