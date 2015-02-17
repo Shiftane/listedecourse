@@ -1,5 +1,5 @@
 'use strict';
-angular.module('mean.listedecourse').controller('ModalInstanceCtrl', function ($scope, $modalInstance, listedecourse) {
+angular.module('mean.listedecourse').controller('ModalInstanceCtrl', function ($scope, $log, $modalInstance, listedecourse) {
 
   $scope.listedecourse = listedecourse;
   // $scope.selected = {
@@ -17,6 +17,15 @@ angular.module('mean.listedecourse').controller('ModalInstanceCtrl', function ($
     popupWin.document.close();
   };
 
+  $scope.toggle = function(scope) {
+      $log.info('Toggle node : ' + scope);
+      scope.toggle();
+    };
+
+  $scope.remove = function(scope) {
+    $log.info('Remove node : ' + scope);
+    scope.remove();
+  };
 
   $scope.cancel = function () {
     $modalInstance.dismiss('cancel');

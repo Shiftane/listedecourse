@@ -1,8 +1,8 @@
 /*global $:false */
 'use strict';
 
-angular.module('mean.listedecourse', ['angularNumberPicker']).controller('ListedecourseController', ['$scope', '$log', '$http', 'Global', 'Listedecourse','$modal',
-  function($scope, $log, $http, Global, Listedecourse, $modal) {
+angular.module('mean.listedecourse').controller('ListedecourseController', ['$scope', '$log', '$http', 'Global', 'Listedecourse','$modal','$sce',
+  function($scope, $log, $http, Global, Listedecourse, $modal, $sce) {
     $scope.global = Global;
     $scope.package = {
       name: 'listedecourse'
@@ -51,6 +51,8 @@ angular.module('mean.listedecourse', ['angularNumberPicker']).controller('Listed
         	$http.get('/marmitonsnippet/recette/' + encodeURIComponent(recipeUrl)).
     		  success(function(data, status, headers, config) {
     		  	$scope.recipe = data;
+                $scope.recipe.result.descriptionSafe = $sce.trustAsHtml(data.result.description);
+                delete $scope.recipe.result.description;
     		  	$log.info($scope.recipe);
                 $scope.num = parseInt($scope.recipe.result.contenu.nbrPersons);
                 $scope.oldNbrPersons = parseInt($scope.recipe.result.contenu.nbrPersons);

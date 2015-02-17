@@ -4,59 +4,25 @@
         </div>
         <div class="modal-body">
             <!-- LIST OF INGREDIENTS AND RECIPES-->
-              <div class="ingredient row"data-ng-init="allRecettes=true">
-              <!--  <div class="col-lg-6">
-                  <button ng-click="allIngredients=false;allRecettes=true" class="btn btn-primary btn-sm">
-                    <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
-                    Par recette
-                  </button>
-                </div>
-                <div class="col-lg-6">
-                  <button ng-click="allRecettes=false;allIngredients=true" class="btn btn-primary btn-sm">
-                  <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>
-                  Par ingrédient
-                  </button>
-                </div>-->
-                <div class="col-lg-12">
-                  <div id="printableArea">
-                    <div data-ng-show="allRecettes">
-                        <div data-ng-repeat="recette in listedecourse.recettes" class="table">
-                          <div >
-                            <h3>{{recette.title}} {{recette.contenu.nbrPersons}} Personne(s)</h3>
-                          </div>
-                          <div data-ng-repeat="ingredient in recette.contenu.ingredients">
-                            {{ingredient.product}} | {{ingredient.quantity | number:1}} {{ingredient.unity}}
-                          </div>
-                        </div>
-                    </div>
-
-                    <div data-ng-show="allIngredients">
-                      <div class="table-responsive">
-                        <table data-ng-repeat="recette in listedecourse.recettes" class="table">
-                        
-                          <tr>
-                          <th>Nom</th><th>Quantité/unité</th><th>Recette</th>
-                          </tr>
-                          <tr data-ng-repeat="ingredient in recette.contenu.ingredients | orderBy:'product':false">
-                            <td>{{ingredient.product}}</td><td>{{ingredient.quantity | number:1}} {{ingredient.unity}}</td><td>{{recette.title}}</td>
-                          </tr>
-                        </table>
+              <div ui-tree="options"  data-max-depth="2" id="printableArea" data-drag-enabled="false">
+                <ol ui-tree-nodes="" ng-model="listedecourse.recettes" collapse="false">
+                  <li ng-repeat="recette in listedecourse.recettes" ui-tree-node >
+                    <div ui-tree-handle >
+                      <div ui-tree-handle="" class="ng-scope ng-binding angular-ui-tree-handle">
+                      <a class="btn btn-success btn-xs" ng-click="toggle(this)"><span class="glyphicon glyphicon-chevron-down" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
+                      {{recette.title}} {{recette.contenu.nbrPersons}} Personne(s)
+                      <a class="pull-right btn btn-danger btn-xs" ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
                       </div>
+                      
                     </div>
-                  </div>
-                </div>
-              </div>
-
-              <div ui-tree>
-                <ol ui-tree-nodes="" ng-model="list">
-                  <li ng-repeat="recette in listedecourse.recettes" ui-tree-node>
-                    <div ui-tree-handle>
-                      {{recette}}
-                    </div>
-                    <ol ui-tree-nodes="" ng-model="item.items">
-                      <li ng-repeat="ingredient in recette.contenu.ingredients | orderBy:'product':false" ui-tree-node>
+                    <ol ui-tree-nodes="" ng-model="recette.contenu.ingredients" collapse="false">
+                      <li ng-repeat="ingredient in recette.contenu.ingredients" ui-tree-node>
                         <div ui-tree-handle>
-                          {{ingredient.product}}
+                          <div ui-tree-handle="" class="ng-scope ng-binding angular-ui-tree-handle">
+                          {{ingredient.product}} {{ingredient.quantity | number:1}} {{ingredient.unity}}
+                          <a class="pull-right btn btn-danger btn-xs" ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
+                          </div>
+                          
                         </div>
                       </li>
                     </ol>
