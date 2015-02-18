@@ -50,7 +50,14 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
 
         	$http.get('/marmitonsnippet/recette/' + encodeURIComponent(recipeUrl)).
     		  success(function(data, status, headers, config) {
-    		  	$scope.recipe = data;
+                $log.info('recipe ' + $scope.recipe);
+                if($scope.recipe && $scope.recipe.result && $scope.recipe.result.image){
+                    $log.info('before ' + $scope.recipe.result.image);
+                    $log.info('delete image');
+                    delete $scope.recipe.result.image;    
+                    $log.info('after ' + $scope.recipe.result.image);
+                }
+                $scope.recipe = data;
                 $scope.recipe.result.descriptionSafe = $sce.trustAsHtml(data.result.description);
                 delete $scope.recipe.result.description;
     		  	$log.info($scope.recipe);

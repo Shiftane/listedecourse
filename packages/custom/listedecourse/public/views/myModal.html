@@ -4,12 +4,12 @@
         </div>
         <div class="modal-body">
             <!-- LIST OF INGREDIENTS AND RECIPES-->
-              <div ui-tree="options"  data-max-depth="2" id="printableArea" data-drag-enabled="false">
+              <div ui-tree="options"  id="printableArea" data-drag-enabled="false">
                 <ol ui-tree-nodes="" ng-model="listedecourse.recettes" collapse="false">
                   <li ng-repeat="recette in listedecourse.recettes" ui-tree-node >
                     <div ui-tree-handle >
                       <div ui-tree-handle="" class="ng-scope ng-binding angular-ui-tree-handle">
-                      <a class="btn btn-success btn-xs" ng-click="toggle(this)"><span class="glyphicon glyphicon-chevron-down" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
+                      <a class="btn btn-success btn-xs" data-nodrag ng-click="toggle(this)"><span class="glyphicon glyphicon-chevron-down" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
                       {{recette.title}} {{recette.contenu.nbrPersons}} Personne(s)
                       <a class="pull-right btn btn-danger btn-xs" ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
                       </div>

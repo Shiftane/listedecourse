@@ -1,4 +1,4 @@
-<div class="" data-ng-controller="ListedecourseController" data-ng-init="showPopupBasket=false">
+<div class="full-height" data-ng-controller="ListedecourseController" data-ng-init="showPopupBasket=false">
   <div class="container">
     <div class="navbar-static-top navbar-fixed-top menu-top">
       <!-- SEARCH BOX -->
@@ -32,8 +32,8 @@
     </div>
     <div class="center">
       <!-- SEARCH RESULTS -->
-      <div class="search-results col-xs-12 col-sm-3 col-md-3 col-lg-3 text-left" data-loading>
-          <div class="box-results box-scroll " data-ng-show="results.result">
+      <div class="search-results col-xs-12 col-sm-3 col-md-3 col-lg-3 text-left" data-ng-show="results.result">
+          <div class="box-results box-scroll " >
             <table class="table table-striped table-hover">
                 <tr data-ng-repeat="result in results.result" class="">
                   <td class="cell-img-result">
@@ -51,8 +51,8 @@
       </div>
       
       <!-- RECIPE DESCRIPTION -->
-      <div id="" data-ng-show="recipe" class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-        <div class="">
+      <div data-ng-show="recipe" class="full-height box-scroll col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div class="full-height">
             <div class="info">
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
                   <a href="{{recipe.recipeUrl}}" target="_blank"><img data-ng-src="{{results.logoUrl}}" class="img-responsive"></a>
@@ -65,15 +65,15 @@
                 </div>
                 <div data-ng-bind-html="recipe.result.descriptionSafe">
                 </div>
-                <div class="">
+                <div class="" ng-show="recipe.result.image">
                   <img data-ng-src="{{recipe.result.image}}" class="box-shadow center-block img-rounded img-responsive">
                 </div>
             </div>
         </div>
       </div>
       <!-- RECIPE INGREDIENTS -->
-      <div data-ng-show="recipe" class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-        <div class="recipe-ingredients">
+      <div data-ng-show="recipe" class="full-height col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        <div class="recipe-ingredients full-height">
           <form name="quantitiesChange" class="css-form">
             <div class="row">
               <div class="text-center col-xs-12 col-sm-12 col-md-12 col-lg-12">

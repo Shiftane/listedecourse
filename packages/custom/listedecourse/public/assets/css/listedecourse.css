@@ -48,9 +48,11 @@
     padding-right:0;
   }
 }
-
+.content{
+    margin-top: 0;
+}
 .center{
-	margin-top : 45px;
+	padding-top : 55px;
     height:100%;
 }
 .container{
