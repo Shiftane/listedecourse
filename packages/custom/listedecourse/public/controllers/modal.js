@@ -16,7 +16,7 @@ angular.module('mean.listedecourse').controller('ModalInstanceCtrl', function ($
     popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + printContents + '</html>');
     popupWin.document.close();
   };
-
+  //$scope.emit()
   $scope.toggle = function(scope) {
       $log.info('Toggle node : ' + scope);
       scope.toggle();
@@ -28,6 +28,7 @@ angular.module('mean.listedecourse').controller('ModalInstanceCtrl', function ($
   };
 
   $scope.cancel = function () {
+    $log.info('Cancel Popup ');
     $modalInstance.dismiss('cancel');
   };
 });

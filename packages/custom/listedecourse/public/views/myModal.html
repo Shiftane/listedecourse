@@ -2,30 +2,31 @@
         <div class="modal-header">
             <h3 class="modal-title">Liste de courses</h3>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" id="printableArea">
             <!-- LIST OF INGREDIENTS AND RECIPES-->
-              <div ui-tree="options"  id="printableArea" data-drag-enabled="false">
-                <ol ui-tree-nodes="" ng-model="listedecourse.recettes">
-                  <li ng-repeat="recette in listedecourse.recettes" ui-tree-node >
-                      <div ui-tree-handle="" class="ng-scope ng-binding angular-ui-tree-handle">
-                      <a class="btn btn-success btn-xs" data-nodrag ng-click="toggle(this)"><span class="glyphicon glyphicon-chevron-down" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
-                      {{recette.title}} {{recette.contenu.nbrPersons}} Personne(s)
-                      <a class="pull-right btn btn-danger btn-xs" ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
-                      </div>
-                    <ol ui-tree-nodes="" ng-model="recette.contenu.ingredients">
-                      <li ng-repeat="ingredient in recette.contenu.ingredients" ui-tree-node>
-                          <div ui-tree-handle="" class="ng-scope ng-binding angular-ui-tree-handle row">
+              <script type="text/ng-template" id="items_renderer.html">
+                <div ui-tree-handle>
+                  <a class="btn btn-success btn-xs" data-nodrag ng-click="toggle(this)"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
+                  {{recette.title}} {{recette.contenu.nbrPersons}} Personne(s)
+                  <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
+                </div>
+                <ol ui-tree-nodes="options" ng-model="recette.contenu.ingredients" ng-class="{hidden: collapsed}" collapsed="true">
+                  <li ng-repeat="ingredient in recette.contenu.ingredients" ui-tree-node>
+                    <div ui-tree-handle class="row">
                             <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
                               {{ingredient.product}} 
                             </div>
                             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                               {{ingredient.quantity | number:1}} {{ingredient.unity}}
                             </div>
-                          <a class="pull-right btn btn-danger btn-xs" ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
-                          </div>
-                      </li>
-                    </ol>
+                      <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
+                    </div>
                   </li>
+                </ol>
+              </script>
+              <div ui-tree="options" data-drag-enabled="false">
+                <ol ui-tree-nodes ng-model="listedecourse.recettes" >
+                  <li ng-repeat="recette in listedecourse.recettes" ui-tree-node ng-include="'items_renderer.html'"></li>
                 </ol>
               </div>
 

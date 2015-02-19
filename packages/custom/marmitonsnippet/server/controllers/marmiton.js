@@ -213,7 +213,8 @@ exports.getRecette = function(req, res){
     url: recetteUrl,
     headers: {
         'User-Agent': 'Mozilla/5.0'
-      }
+      },
+    timeout : 3000
   };
   request(options, function(err, resp, body){
     if(err){
@@ -279,7 +280,8 @@ exports.searchMarmiton = function(req, res) {
     url: urlMarmiton,
     headers: {
         'User-Agent': 'Mozilla/5.0'
-      }
+      },
+      timeout : 3000
   };
   request(options, function(err, resp, body){
     var response = {};
@@ -295,7 +297,8 @@ exports.searchMarmiton = function(req, res) {
             error: 'Cannot find searchresults with URL = ' + urlMarmiton
           };
         }
-        console.log('get from cache success ' + searchresults[0]);
+        console.log('get from cache success ');
+        // + searchresults[0]);
         //console.log('Result from cache : ' + searchresults);
         if(searchresults.length > 0){
           body = searchresults[0].resultsHTML;
