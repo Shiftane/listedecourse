@@ -24,7 +24,7 @@
                   </li>
                 </ol>
               </script>
-              <div ui-tree="options" data-drag-enabled="false">
+              <div ui-tree="options" data-drag-enabled="false" ng-init="collapseAll()">
                 <ol ui-tree-nodes ng-model="listedecourse.recettes" >
                   <li ng-repeat="recette in listedecourse.recettes" ui-tree-node ng-include="'items_renderer.html'"></li>
                 </ol>
