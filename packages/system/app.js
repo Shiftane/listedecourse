@@ -5,7 +5,8 @@
  */
 var Module = require('meanio').Module,
   favicon = require('serve-favicon'),
-  express = require('express');
+  express = require('express'),
+  sitemap = require('express-sitemap')();
 
 var SystemPackage = new Module('System');
 
@@ -30,6 +31,17 @@ SystemPackage.register(function(app, auth, database) {
 
   // Adding robots and humans txt
   app.use(express.static(__dirname + '/public/assets/static'));
+
+  sitemap.generate(app);
+
+  app.get('/sitemap.xml', function(req, res) { // send XML map
+
+    sitemap.XMLtoWeb(res);
+  }).get('/robots.txt', function(req, res) { // send TXT map
+
+    sitemap.TXTtoWeb(res);
+  });
+
 
   return SystemPackage;
 });

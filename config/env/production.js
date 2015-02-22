@@ -28,7 +28,7 @@ module.exports = {
     */
   },
   app: {
-    name: 'Listedecourse.ch - Votre liste de course grâce aux recettes'
+    name: 'Listedecourse.ch'
   },
   facebook: {
     clientID: 'APP_ID',
@@ -46,9 +46,9 @@ module.exports = {
     callbackURL: 'http://localhost:3000/auth/github/callback'
   },
   google: {
-    clientID: '1014971847258-tpdr9q69055dg5qorgssdtgbhk1dgcf0.apps.googleusercontent.com',
-    clientSecret: 'O993PoKTSwuemWBIo_huCSCw',
-    callbackURL: 'http://stark-temple-4587.herokuapp.com/auth/google/callback'
+    clientID: '219626113375-ibd0j6jkersmar74at9e10ciu2d6gr6f.apps.googleusercontent.com',
+    clientSecret: 'JY2jZU5kndCtyqsIf1gH5E_u',
+    callbackURL: 'http://www.listedecourse.ch/auth/google/callback'
   },
   linkedin: {
     clientID: 'API_KEY',
