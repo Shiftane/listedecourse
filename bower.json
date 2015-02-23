@@ -12,6 +12,7 @@
     "angular-bootstrap": "0.11.0",
     "angular-ui-router": "#master",
     "angular-number-picker": "latest",
-    "angular-ui-tree": "latest"
+    "angular-ui-tree": "latest",
+    "angulartics": "latest"
   }
 }

@@ -1,8 +1,8 @@
 /*global $:false */
 'use strict';
 
-angular.module('mean.listedecourse').controller('ListedecourseController', ['$scope', '$log', '$http', 'Global', 'Listedecourse','$modal','$sce',
-  function($scope, $log, $http, Global, Listedecourse, $modal, $sce) {
+angular.module('mean.listedecourse').controller('ListedecourseController', ['$scope', '$log', '$http', 'Global', 'Listedecourse','$modal','$sce', '$analytics',
+  function($scope, $log, $http, Global, Listedecourse, $modal, $sce, $analytics) {
     $scope.global = Global;
     $scope.package = {
       name: 'listedecourse'
@@ -33,7 +33,7 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
 		$scope.NumberOfRecipe = 0;
 		$scope.NumberOfIngredient = 0;
         $scope.search = function(){
-            
+            $analytics.pageTrack('search/'+this.query);
         	$log.info('Search for query : ' + this.query);
         	$http.get('/marmitonsnippet/search/' + this.query).
     		  success(function(data, status, headers, config) {
