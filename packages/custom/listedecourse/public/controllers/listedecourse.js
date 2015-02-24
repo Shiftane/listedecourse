@@ -86,7 +86,7 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
         });
 
         $scope.saveRecetteInListeDeCourse = function(){
-            $analytics.pageTrack('saverecipe/');
+            $analytics.pageTrack('saverecipe');
         	if($scope.listedecourse){
                 $scope.recipe.result.contenu.nbrPersons = $scope.num;
         		$scope.listedecourse.recettes.push($scope.recipe.result);
