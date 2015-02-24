@@ -10,7 +10,7 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
 
 
 	  	$scope.open = function (size) {
-            $analytics.eventTrack('openRecipes');
+            $analytics.pageTrack('openRecipe');
 		    var modalInstance = $modal.open({
 		      templateUrl: '/listedecourse/views/myModal.html',
 		      controller: 'ModalInstanceCtrl',
@@ -46,7 +46,7 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
     		 });
         };
         $scope.getRecipe = function(recipeUrl){
-            $analytics.pageTrack('recipe/'+recipeUrl);
+            $analytics.pageTrack('recipe/' + recipeUrl);
         	$log.info('Get Recipe : ' + recipeUrl);
 
         	$http.get('/marmitonsnippet/recette/' + encodeURIComponent(recipeUrl)).
@@ -86,7 +86,7 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
         });
 
         $scope.saveRecetteInListeDeCourse = function(){
-            $analytics.pageTrack('saverecipe/'+recipeUrl);
+            $analytics.pageTrack('saverecipe/');
         	if($scope.listedecourse){
                 $scope.recipe.result.contenu.nbrPersons = $scope.num;
         		$scope.listedecourse.recettes.push($scope.recipe.result);

@@ -10,7 +10,7 @@ angular.module('mean.listedecourse').controller('ModalInstanceCtrl', function ($
   //   $modalInstance.close($scope.selected.item);
   // };
   $scope.print = function(divId){
-    $analytics.eventTrack('printRecipe');
+    $analytics.pageTrack('printRecipe');
     var printContents = document.getElementById(divId).innerHTML;    
     var popupWin = window.open('', '_blank', 'width=800,height=800');
     popupWin.document.open();
