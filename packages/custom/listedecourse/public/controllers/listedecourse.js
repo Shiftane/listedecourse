@@ -35,17 +35,23 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
         $scope.search = function(){
             $analytics.pageTrack('search/'+this.query);
         	$log.info('Search for query : ' + this.query);
+            // TODO Waiting screen
+            $('body').addClass('loading');
+
         	$http.get('/marmitonsnippet/search/' + this.query).
     		  success(function(data, status, headers, config) {
     		  	$scope.results = data;
     		  	$log.info($scope.results);
+                $('body').removeClass('loading');
     		  }).
     		  error(function(data, status, headers, config) {
                 // TODO RETURN MESSAGE ERROR
     		    $scope.results = {};
+                $('body').removeClass('loading');
     		 });
         };
         $scope.getRecipe = function(recipeUrl){
+            $('body').addClass('loading');
             $analytics.pageTrack('recipe/' + recipeUrl);
         	$log.info('Get Recipe : ' + recipeUrl);
 
@@ -65,9 +71,10 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
                 $scope.num = parseInt($scope.recipe.result.contenu.nbrPersons);
                 $scope.oldNbrPersons = parseInt($scope.recipe.result.contenu.nbrPersons);
                 $log.info('newNbrPersons : ' + $scope.recipe.result.contenu.nbrPersons);
+                $('body').removeClass('loading');
     		  }).
     		  error(function(data, status, headers, config) {
-    		    
+    		    $('body').removeClass('loading');
     		 });
         };
         
