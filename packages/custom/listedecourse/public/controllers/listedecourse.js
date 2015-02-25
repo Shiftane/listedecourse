@@ -1,8 +1,8 @@
 /*global $:false */
 'use strict';
 
-angular.module('mean.listedecourse').controller('ListedecourseController', ['$scope', '$log', '$http', 'Global', 'Listedecourse','$modal','$sce', '$analytics',
-  function($scope, $log, $http, Global, Listedecourse, $modal, $sce, $analytics) {
+angular.module('mean.listedecourse').controller('ListedecourseController', ['$scope', '$log', '$http', 'Global', 'Listedecourse','$modal','$sce', '$analytics', '$location',
+  function($scope, $log, $http, Global, Listedecourse, $modal, $sce, $analytics, $location) {
     $scope.global = Global;
     $scope.package = {
       name: 'listedecourse'
@@ -34,6 +34,7 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
 		$scope.NumberOfIngredient = 0;
         $scope.search = function(){
             $analytics.pageTrack('search/'+this.query);
+            $location.path('/search/'+this.query);
         	$log.info('Search for query : ' + this.query);
             // TODO Waiting screen
             $('body').addClass('loading');
@@ -53,6 +54,7 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
         $scope.getRecipe = function(recipeUrl){
             $('body').addClass('loading');
             $analytics.pageTrack('recipe/' + recipeUrl);
+            $location.path('/recipe/'+recipeUrl);
         	$log.info('Get Recipe : ' + recipeUrl);
 
         	$http.get('/marmitonsnippet/recette/' + encodeURIComponent(recipeUrl)).
