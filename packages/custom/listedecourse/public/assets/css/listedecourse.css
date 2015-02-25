@@ -249,7 +249,7 @@ span.input-group-addon{
     height:     100%;
     width:      100%;
     background: black;
-    background: rgba( 255, 255, 255, .4 ) 
+    background: rgba( 255, 255, 255, .8 ) 
                 url('/img/ajax-loader.gif') 
                 50% 50% 
                 no-repeat;
