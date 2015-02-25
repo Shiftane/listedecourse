@@ -81,12 +81,12 @@
     "view-helpers": "^0.1.4",
     "cheerio":"^0.18.0",
     "request":"^2.52.0",
+    "grunt-karma": "^0.8.2",
+    "grunt-mocha-test": "^0.10.2",
     "express-sitemap":"^1.5.2",
     "angulartics":"^0.17.2"
   },
   "devDependencies": {
-    "grunt-karma": "^0.8.2",
-    "grunt-mocha-test": "^0.10.2",
     "karma": "^0.12.10",
     "karma-chrome-launcher": "^0.1.3",
     "karma-coffee-preprocessor": "^0.2.1",
