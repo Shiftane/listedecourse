@@ -73,10 +73,10 @@
       </div>
       <!-- RECIPE INGREDIENTS -->
       <div data-ng-show="recipe" class="full-height col-xs-12 col-sm-3 col-md-3 col-lg-3">
-        <div class="recipe-ingredients full-height">
+        <div class="recipe-ingredients box-scroll full-height">
           <form name="quantitiesChange" class="css-form">
             <div class="row">
-              <div class="text-center col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="text-center add-to-list col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <button class="btn btn-success" data-ng-click="saveRecetteInListeDeCourse()">
                   <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                   Ajouter à ma liste
@@ -90,10 +90,17 @@
                   </div>
                   <input type="hidden" data-ng-model="oldNbrPersons"/>
               </div>
-              <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 ingredient-list" data-ng-repeat="ingredient in recipe.result.contenu.ingredients">
-                  <div class="col-xs-4 col-sm-5 col-md-6 col-lg-7">{{ingredient.product}}</div>
-                  <div class="col-xs-8 col-sm-7 col-md-6 col-lg-5">{{ingredient.quantity | number:1}} {{ingredient.unity}} </div>
-              </div>
+              <br/>
+              <br/>
+              <ul class="list-group ingredient-list">
+                <li class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 ingredient-list list-group-item" data-ng-repeat="ingredient in recipe.result.contenu.ingredients">
+                    
+                    <span class="glyphicon glyphicon-check" aria-hidden="true"></span> {{ingredient.product}}
+
+
+                     <span class="badge" ng-show="ingredient.quantity">{{ingredient.quantity | number:1}} {{ingredient.unity}}</span>
+
+                </li>
             </div>
           </form>
         </div>
