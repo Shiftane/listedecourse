@@ -3,7 +3,7 @@
 angular.module('mean.listedecourse').config(['$stateProvider','$locationProvider',
   function($stateProvider, $location) {
   	//$location.html5Mode(html5pushstate);
-    $location.hashPrefix('');
+    //$location.hashPrefix('');
 
     $stateProvider.state('Homepage', {
       url: '/listedecourse/home',

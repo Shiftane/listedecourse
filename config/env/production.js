@@ -28,7 +28,7 @@ module.exports = {
     */
   },
   app: {
-    name: 'Listedecourse.ch'
+    name: 'Ma liste de courses grâce aux meilleures recettes du web'
   },
   facebook: {
     clientID: 'APP_ID',
