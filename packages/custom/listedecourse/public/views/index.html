@@ -51,7 +51,7 @@
       </div>
       
       <!-- RECIPE DESCRIPTION -->
-      <div data-ng-show="recipe" class="full-height box-scroll col-xs-12 col-sm-6 col-md-6 col-lg-6">
+      <div data-ng-show="recipe" class="full-height recipe-detail box-scroll col-xs-12 col-sm-6 col-md-6 col-lg-6">
         <div class="full-height">
             <div class="info">
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
@@ -84,8 +84,8 @@
               </div>  
               <div class="nbr-people">
                   <div class="control-group">
-                    <label class="col-xs-12 col-sm-12 col-md-12 col-lg-12 label-center">Nombre de Personnes</label> 
-                    <h-number value="num" step="1" min="1" class="col-xs-12 col-sm-12 col-md-12 col-lg-12"></h-number>
+                    <label class="label-number-person col-xs-12 col-sm-12 col-md-12 col-lg-12 label-center">Nombre de Personnes</label> 
+                    <h-number value="num" step="1" min="1" class="select-person-number col-xs-2 col-sm-2 col-md-2 col-lg-2"></h-number>
                     
                   </div>
                   <input type="hidden" data-ng-model="oldNbrPersons"/>
