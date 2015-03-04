@@ -13,6 +13,7 @@
     "angular-ui-router": "#master",
     "angular-number-picker": "latest",
     "angular-ui-tree": "latest",
-    "angulartics": "latest"
+    "angulartics": "latest",
+    "angular-mailchimp":"latest"
   }
 }

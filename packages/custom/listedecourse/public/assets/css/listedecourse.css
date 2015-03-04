@@ -52,7 +52,7 @@
     margin-top: 0;
 }
 .center{
-	padding-top : 56px;
+	padding-top : 45px;
     height:100%;
 }
 .container{
@@ -277,4 +277,12 @@ body.loading {
    modal element will be visible */
 body.loading .modal {
     display: block;
+}
+
+
+.footer{
+    padding : 10px; 
+    color : #DDD;
+    background-color: #555;
+    border-top: 2px solid #DDD;
 }

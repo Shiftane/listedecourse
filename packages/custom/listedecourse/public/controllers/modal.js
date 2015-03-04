@@ -14,21 +14,24 @@ angular.module('mean.listedecourse').controller('ModalInstanceCtrl', function ($
     var printContents = document.getElementById(divId).innerHTML;    
     var popupWin = window.open('', '_blank', 'width=800,height=800');
     popupWin.document.open();
-    popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + printContents + '</html>');
+    popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="/listedecourse/assets/css/print.css" /></head><body onload="window.print()">' + printContents + '</html>');
     popupWin.document.close();
   };
   
   $scope.toggle = function(scope) {
+      $analytics.pageTrack('toggleRecipe');
       $log.info('Toggle node : ' + scope);
       scope.toggle();
     };
 
   $scope.remove = function(scope) {
+    $analytics.pageTrack('removeIngredient');
     $log.info('Remove node : ' + scope);
     scope.remove();
   };
 
   $scope.cancel = function () {
+    $analytics.pageTrack('leaveListedeCourse');
     $log.info('Cancel Popup ');
     $modalInstance.dismiss('cancel');
   };

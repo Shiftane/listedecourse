@@ -17,7 +17,7 @@ for (var index in window.modules) {
 }
 
 // Default modules
-var modules = ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.router', 'angularNumberPicker', 'ui.tree', 'angulartics','angulartics.google.tagmanager'];
+var modules = ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.router', 'angularNumberPicker', 'ui.tree', 'angulartics','angulartics.google.tagmanager', 'mailchimp'];
 modules = modules.concat(packageModules);
 
 // Combined modules
