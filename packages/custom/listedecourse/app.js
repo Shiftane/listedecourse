@@ -18,7 +18,7 @@ Listedecourse.register(function(app, auth, database) {
 
   //We are adding a link to the main menu for all authenticated users
   Listedecourse.menus.add({
-    title: 'Rechercher une recette',
+    title: 'Les meilleures recettes du web dans votre liste de courses',
     link: 'Homepage',
     roles: ['anonymous']
     /*,
