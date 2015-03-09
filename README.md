@@ -1,4 +1,4 @@
-# (http://www.listedecourse.ch) Listedecourse.ch based on (http://mean.io/) MEAN Stack
+# [Listedecourse.ch](http://www.listedecourse.ch)  based on  [MEAN Stack](http://mean.io/)
 
 [![Build Status](https://travis-ci.org/Shiftane/listedecourse.svg?branch=master)](https://travis-ci.org/Shiftane/listedecourse)
 [![Dependencies Status](https://david-dm.org/Shiftane/listedecourse.svg)](https://david-dm.org/Shiftane/listedecourse)
