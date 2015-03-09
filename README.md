@@ -42,6 +42,7 @@ $ npm install -g grunt-cli
 
 * Issue with bson lib
 dependencies must be like 
+````
 ├─┬ connect-mongo@0.4.2
 │ └─┬ mongodb@1.4.31
 │   └── bson@0.2.19 
@@ -51,6 +52,7 @@ dependencies must be like
 └─┬ mongoose@3.8.23
   └─┬ mongodb@1.4.28
     └── bson@0.2.19 
+````
 
 #### Installation problems on Windows 8 / 8.1
 Some of Mean.io dependencies uses [node-gyp](https://github.com/TooTallNate/node-gyp) with supported Python version 2.7.x. So if you see an error related to node-gyp rebuild follow next steps:
