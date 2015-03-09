@@ -85,6 +85,7 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
         	$log.info('NbrPersons : ' + nbrPersons + ' New : ' + $scope.num);
         	var inputNbrPersons = $scope.num;
         	if($scope.recipe){
+                $scope.recipe.result.contenu.nbrPersons = $scope.num;
 	        	$scope.recipe.result.contenu.ingredients.forEach(function(element, index){
 	        		var quantity = element.quantity / nbrPersons * inputNbrPersons;
 	        		$log.info('new Final quantity for ' + element.product + ' = ' + quantity);
