@@ -1,12 +1,24 @@
 {
-  "name": "listedecourse",
-  "description": "Website to create shopping list based on recipes and adapted quantity of ingredient depending of number of people for the recipe",
-  "version": "0.4.1",
-  "private": true,
-  "author": "Thierry Prêtre <shiftane@gmail.com>",
+  "name": "mean",
+  "description": "MEAN.io: A fullstack JavaScript framework powered by MongoDB, ExpressJS, AngularJS, NodeJS.",
+  "version": "0.4.0",
+  "private": false,
+  "author": "Linnovate <mean@linnovate.net>",
   "contributors": [{
-    "name": "Fabien san Vicente",
-    "mail": "fabien.sanvicente@gmail.com"
+    "name": "Lior Kesos",
+    "mail": "lior@linnovate.net"
+  }, {
+    "name": "Yonatan Ellman",
+    "mail": "yonatan@linnovate.net"
+  }, {
+    "name": "Drew Fyock",
+    "mail": "drew@steelbisondev.com"
+  }, {
+    "name": "Ehud Shahak",
+    "mail": "ehud@linnovate.net"
+  }, {
+    "name": "Amos Haviv",
+    "mail": "mail@amoshaviv.com"
   }],
   "listedecourse": "0.4.1",
   "repository": {
