@@ -128,7 +128,13 @@ module.exports = function(grunt) {
   }
 
   //Test task.
-  grunt.registerTask('test', ['external_daemon', 'env:test', 'mochaTest', 'karma:unit']);
+  if (process.env.NODE_ENV === 'production') {
+    grunt.registerTask('test', ['env:test', 'mochaTest', 'karma:unit']);
+  } else {
+    grunt.registerTask('test', ['external_daemon', 'env:test', 'mochaTest', 'karma:unit']);
+  }
+  
+  
 
   // For Heroku users only.
   // Docs: https://github.com/linnovate/mean/wiki/Deploying-on-Heroku
