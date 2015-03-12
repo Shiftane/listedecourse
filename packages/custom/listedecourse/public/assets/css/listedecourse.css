@@ -1,25 +1,29 @@
-/*
+
 @font-face {
     font-family: "Philosopher";
-    src: url('../fonts/Philosopher-Regular.ttf');
+    src: url('/listedecourse/assets/fonts/Philosopher-Regular.eot?#iefix') format('embedded-opentype'),
+            url('/listedecourse/assets/fonts/Philosopher-Regular.ttf') format('truetype');
 }
 @font-face {
     font-family: "Philosopher";
     font-style: italic;
-    src: url('../fonts/Philosopher-Italic.ttf');
+    src: url('/listedecourse/assets/fonts/Philosopher-Italic.eot?#iefix') format('embedded-opentype'),
+            url('/listedecourse/assets/fonts/Philosopher-Italic.ttf') format('truetype');
 }
 @font-face {
     font-family: "Philosopher";
     font-weight: bold;
-    src: url('../fonts/Philosopher-Bold.ttf');
+    src: url('/listedecourse/assets/fonts/Philosopher-Bold.eot?#iefix') format('embedded-opentype'),
+            url('/listedecourse/assets/fonts/Philosopher-Bold.ttf') format('truetype');
 }
 @font-face {
     font-family: "Philosopher";
     font-weight: bold;
     font-style: italic;
-    src: url('../fonts/Philosopher-BoldItalic.ttf');
+    src: url('/listedecourse/assets/fonts/Philosopher-BoldItalic.eot?#iefix') format('embedded-opentype'),
+            url('/listedecourse/assets/fonts/Philosopher-BoldItalic.ttf') format('truetype');
 }
-*/
+
 @media (min-width: 100px) {
   .container {
     width: 100%;
@@ -186,7 +190,7 @@
 
 .recipe-detail{
     padding-top: 10px;
-    padding-bottom: 40px;
+    padding-bottom: 60px;
 }
 
 .recipe-ingredients{
@@ -285,6 +289,7 @@ span.input-group-addon{
                 url('/listedecourse/assets/img/ajax-loader.gif') 
                 50% 50% 
                 no-repeat;
+    background-size: 150px;
 }
 
 /* When the body has the loading class, we turn
@@ -305,4 +310,9 @@ body.loading .modal {
     color : #DDD;
     background-color: #555;
     border-top: 2px solid #DDD;
+}
+
+.highlighted{
+    color : #29A629;
+    font-weight: bold;
 }

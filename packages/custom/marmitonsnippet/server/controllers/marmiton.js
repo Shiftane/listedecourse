@@ -281,7 +281,7 @@ exports.searchMarmiton = function(req, res) {
     headers: {
         'User-Agent': 'Mozilla/5.0'
       },
-      timeout : 3000
+      timeout : 5000
   };
   request(options, function(err, resp, body){
     var response = {};

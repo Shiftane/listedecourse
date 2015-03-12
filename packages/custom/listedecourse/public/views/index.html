@@ -22,7 +22,9 @@
       </div>
       <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3 text-right">
           <div class="btn-group" role="group" aria-label="...">
-            <button type="button" class="btn btn-primary" data-ng-click="open()">{{NumberOfRecipe}} Recette(s)</button>
+            <button type="button" class="btn btn-primary" data-ng-click="open()">
+              <span class="badge">{{NumberOfRecipe}}</span> Recette(s)
+            </button>
             <!-- <button type="button" class="btn btn-primary" data-ng-click="open()">{{NumberOfIngredient}} Ingrédient(s) </button>
             <button type="button" class="btn btn-primary" data-ng-click="showPopupBasket=!showPopupBasket">
               <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
@@ -57,17 +59,19 @@
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
                   <a href="{{recipe.recipeUrl}}" target="_blank"><img data-ng-src="{{results.logoUrl}}" class="img-responsive"></a>
                 </div>
-                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                   <h4>{{recipe.result.title}}</h4>
-                  <p>Temps de préparation : {{recipe.result.prepTime}} min</p>
-                  <p>Temps de cuisson : {{recipe.result.cookingTime}} min</p>
+                  <p class="highlighted">Temps de préparation : <span class="badge">{{recipe.result.prepTime}} min</span></p>
+                  <p class="highlighted">Temps de cuisson : <span class="badge">{{recipe.result.cookingTime}} min</span></p>
 
                 </div>
-                <div data-ng-bind-html="recipe.result.descriptionSafe">
-                </div>
-                <div class="" ng-show="recipe.result.image">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" ng-show="recipe.result.image">
                   <img data-ng-src="{{recipe.result.image}}" class="box-shadow center-block img-rounded img-responsive">
                 </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" data-ng-bind-html="recipe.result.descriptionSafe">
+                </div>
+
             </div>
         </div>
       </div>
@@ -94,8 +98,8 @@
               <br/>
               <ul class="list-group ingredient-list">
                 <li class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 ingredient list-group-item" data-ng-repeat="ingredient in recipe.result.contenu.ingredients">
-                    
-                    <span class="glyphicon glyphicon-check" aria-hidden="true"></span> {{ingredient.product}}
+                    <input type="checkbox" class="checkbox-success" checked>
+                    {{ingredient.product}}
 
 
                      <span class="badge" ng-show="ingredient.quantity">{{ingredient.quantity | number:1}} {{ingredient.unity}}</span>
