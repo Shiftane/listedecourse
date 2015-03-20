@@ -1,3 +1,10 @@
+li li{
+
+	list-style-image: url('/listedecourse/assets/img/unchecked_checkbox.png');
+}
 li{
-	color: red;
+	font-size: 16px;
+}
+li a{
+	display: none;
 }
