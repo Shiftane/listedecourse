@@ -292,6 +292,10 @@ span.input-group-addon{
     background-size: 150px;
 }
 
+.checkbox{
+    display:none;
+}
+
 /* When the body has the loading class, we turn
    the scrollbar off with overflow:hidden */
 body.loading {

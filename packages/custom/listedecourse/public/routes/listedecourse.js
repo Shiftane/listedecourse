@@ -9,6 +9,10 @@ angular.module('mean.listedecourse').config(['$stateProvider','$locationProvider
       url: '/listedecourse/home',
       templateUrl: 'listedecourse/views/index.html'
     });
+    /*$stateProvider.state('Search', {
+      url: '/search/:searchTerm',
+      templateUrl: 'listedecourse/views/index.html'
+    });*/
     
   }
 ]);

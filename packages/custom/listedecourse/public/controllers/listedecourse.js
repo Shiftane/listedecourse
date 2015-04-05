@@ -33,8 +33,9 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
 		$scope.NumberOfRecipe = 0;
 		$scope.NumberOfIngredient = 0;
         $scope.search = function(){
+
             $analytics.pageTrack('search/'+this.query);
-            $location.path('/search/'+this.query);
+            
         	$log.info('Search for query : ' + this.query);
             // TODO Waiting screen
             $('body').addClass('loading');
@@ -50,11 +51,13 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
     		    $scope.results = {};
                 $('body').removeClass('loading');
     		 });
+            //$location.path('/search/'+this.query);
+            //$location.replace();
         };
         $scope.getRecipe = function(recipeUrl){
             $('body').addClass('loading');
             $analytics.pageTrack('recipe/' + recipeUrl);
-            $location.path('/recipe/'+recipeUrl);
+            //$location.path('/recipe/'+recipeUrl);
         	$log.info('Get Recipe : ' + recipeUrl);
 
         	$http.get('/marmitonsnippet/recette/' + encodeURIComponent(recipeUrl)).

@@ -1,8 +1,8 @@
 <div class="footer navbar-static-bottom navbar-fixed-bottom">
 	
 	<form name="MailchimpSubscriptionForm" ng-controller="MailchimpSubscriptionCtrl" class="form-inline">
-	<div ng-show="mailchimp.result !== 'success' | mailchimp.result !== 'error'">
-		<label for="email">Découvrir nos nouveautés </label>
+	<div ng-show="mailchimp.result !== 'success'">
+		<label for="email">Suivez-nous </label>
 		<input class="hidden" type="hidden" ng-model="mailchimp.username" ng-init="mailchimp.username='listedecourse'">
 		<input class="hidden" type="hidden" ng-model="mailchimp.dc" ng-init="mailchimp.dc='us10'">
 		<input class="hidden" type="hidden" ng-model="mailchimp.u" ng-init="mailchimp.u='957fa6179b585083d5206cea2'">
