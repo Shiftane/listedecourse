@@ -39,10 +39,10 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
         	$log.info('Search for query : ' + this.query);
             // TODO Waiting screen
             $('body').addClass('loading');
-
+            $scope.results = [];
         	$http.get('/marmitonsnippet/search/' + this.query).
     		  success(function(data, status, headers, config) {
-    		  	$scope.results = data;
+    		  	$scope.results.push(data);
     		  	$log.info($scope.results);
                 $('body').removeClass('loading');
     		  }).
@@ -51,6 +51,17 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
     		    $scope.results = {};
                 $('body').removeClass('loading');
     		 });
+            $http.get('/swissmilksnippet/search/' + this.query).
+              success(function(data, status, headers, config) {
+                $scope.results.push(data);
+                $log.info($scope.results);
+                $('body').removeClass('loading');
+              }).
+              error(function(data, status, headers, config) {
+                // TODO RETURN MESSAGE ERROR
+                $scope.results = {};
+                $('body').removeClass('loading');
+             });
             //$location.path('/search/'+this.query);
             //$location.replace();
         };

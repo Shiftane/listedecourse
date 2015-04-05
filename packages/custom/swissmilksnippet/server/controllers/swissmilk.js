@@ -11,19 +11,23 @@ var
   //config = require('meanio').loadConfig();
   searchresultCtrl = require('../../../commons/server/controllers/searchresults');
 
-
-var url = 'http://www.marmiton.org/recettes/recherche.aspx?aqt=';
-var logoUrl = 'http://images.marmitoncdn.org/Skins/1/Common/Images/favicon.ico';
+var siteName = 'Swissmilk';
+var baseUrl = 'http://www.swissmilk.ch/';
+var url = 'http://www.swissmilk.ch/fr/toutes-les-recettes/recherche.html?qt=';
+var logoUrl = 'http://www.swissmilk.ch/favicon.ico';
 
 
 // PARSING PLACEHOLDER
-var resultsPath = 'div.m_item.recette_classique';
-var recettePath = 'div.m_bloc_cadre';
-var titlePlaceHolder = 'h1.m_title span.fn';
-var prepTimePlaceHolder = 'span.preptime';
-var cookTimePlaceHolder = 'span.cooktime';
-var descriptionPlaceHolder = 'div.m_content_recette_todo';
+var resultsPath = 'div.rdb-recipelist-item';
+var titlePlaceHolder = 'h4';
+var linkDetails = 'a.rdb-link.rdb-recipe';
 
+// Recipe Detail
+var recettePath = '';
+var prepTimePlaceHolder = '';
+var cookTimePlaceHolder = '';
+var descriptionPlaceHolder = 'ol.rdb-preparation';
+var imagePlaceHolder = 'img#rdb-recipe-image';
 
 // UNITIES AND SEPARATOR FOR PARSER
 var unities = ['cuillère à café', ,' tasse ', ' tasses ', ' grosses cuillères à café ', ' cuillères à café ', ' kg ',' g ', ' louche ', ' louches ', ' cube ', 'feuilles', 'ml', ' pot ', ' petit pot ', ' litre ', 'cuillère à soupe', 'cuillères à soupe', ' dosette ', ' gousses ', ' gousse ', ' quelque ', ' quelques ', ' paquet ', ' cl ', ' pincée '];
@@ -33,7 +37,7 @@ var minmaxSeparator = 'à';
 /*
  * Method to parse result from Marmiton with cheerio
 */
-var parseSearchResponse = function(body, urlMarmiton){
+var parseSearchResponse = function(body, urlSwissmilk){
   console.log('Request done : TRY TO PARSE IT');
     var result = [];
     var $ = cheerio.load(body);
@@ -44,20 +48,20 @@ var parseSearchResponse = function(body, urlMarmiton){
       var newRecipe = {};
 
       //TODO : STORE THIS INFORMATION IN JSON AND THEN DB
-      newRecipe.title = $('div.m_titre_resultat',link).text().trim();
-      newRecipe.link = $('div.m_titre_resultat a', link).attr('href');
-      newRecipe.prepTime = $('div.m_prep_time', link).parent().text().trim();
-      newRecipe.cookingTime = $('div.m_cooking_time', link).parent().text().trim();
+      newRecipe.title = $(titlePlaceHolder,link).text().trim();
+      newRecipe.link = $(linkDetails, link).attr('href');
+      newRecipe.prepTime = $(prepTimePlaceHolder, link).parent().text().trim();
+      newRecipe.cookingTime = $(cookTimePlaceHolder, link).parent().text().trim();
       newRecipe.details = $('div.m_detail_recette', link).text().trim();
-      newRecipe.text = $('div.m_texte_resultat', link).text().trim();
+      newRecipe.text = $(descriptionPlaceHolder, link).text().trim();
       result.push(newRecipe);
     });
     console.log('Results Parsed '+result.length);
     var response = {
-        origin : 'Marmiton',
+        origin : siteName,
         logoUrl : logoUrl,
-        baseUrl : 'http://www.marmiton.org',
-        calledUrl : urlMarmiton,
+        baseUrl : baseUrl,
+        calledUrl : urlSwissmilk,
         message: 'Parsing finished',
         result: result,
         status: 'success'
@@ -98,7 +102,7 @@ var parseRecette = function(body, recetteUrl){
   newRecipe.title = $(titlePlaceHolder,recette).text().trim();
   newRecipe.prepTime = $(prepTimePlaceHolder, recette).text().trim();
   newRecipe.cookingTime = $(cookTimePlaceHolder, recette).text().trim();
-  newRecipe.image = $('a.m_content_recette_illu > img', recette).attr('src');
+  newRecipe.image = $(imagePlaceHolder, recette).attr('src');
   newRecipe.description = $(descriptionPlaceHolder).html();
   var nbrPersons = $('p.m_content_recette_ingredients > span', recette).text().substring(17,19).trim();
   $('p.m_content_recette_ingredients span', recette).remove();
@@ -192,7 +196,7 @@ var parseRecette = function(body, recetteUrl){
 
   
   var response = {
-      origin : 'Marmiton',
+      origin : siteName,
       recipeUrl : recetteUrl,
       logoUrl : logoUrl,
       message: 'Parsing finished',
@@ -238,8 +242,8 @@ exports.getRecette = function(req, res){
         }else{
           // NO manner to get Recipe
           var response = {
-              origin : 'Marmiton',
-              baseUrl : 'http://www.marmiton.org',
+              origin : siteName,
+              baseUrl : baseUrl,
               recipeUrl : recetteUrl,
               logoUrl : logoUrl,
               message: err,
@@ -274,10 +278,10 @@ exports.searchMarmiton = function(req, res) {
 
   // START TO SEARCH ON MARMITON
   // Specific Addition of word in marmiton with "-"
-  var urlMarmiton = url + searchTerm.replace(' ', '-');  
-  console.log('Try to reach : ' + urlMarmiton);
+  var urlSearch = url + searchTerm.replace(' ', '-');  
+  console.log('Try to reach : ' + urlSearch);
   var options = {
-    url: urlMarmiton,
+    url: urlSearch,
     headers: {
         'User-Agent': 'Mozilla/5.0'
       },
@@ -288,13 +292,13 @@ exports.searchMarmiton = function(req, res) {
     if(err){
       // We get from the cache if Marmiton is down
       console.log('Request done : ERORR --> ' + err);
-      var cachedResults = searchresultCtrl.searchresultbyUrl(urlMarmiton);
+      var cachedResults = searchresultCtrl.searchresultbyUrl(urlSearch);
       console.log('Try to get from cache');
       cachedResults.exec(function(err, searchresults){
         if (err) {
           console.log('Error getting from cache : ' + err);
           return {
-            error: 'Cannot find searchresults with URL = ' + urlMarmiton
+            error: 'Cannot find searchresults with URL = ' + urlSearch
           };
         }
         console.log('get from cache success ');
@@ -303,14 +307,14 @@ exports.searchMarmiton = function(req, res) {
         if(searchresults.length > 0){
           body = searchresults[0].resultsHTML;
           console.log('Result get from CACHE : extract --> ' + body.substring(50));
-          res.json(parseSearchResponse(body, urlMarmiton));
+          res.json(parseSearchResponse(body, urlSearch));
         }else{
           // NO manner to get Recipe
           response = {
-            origin : 'Marmiton',
+            origin : siteName,
             logoUrl : logoUrl,
-            baseUrl : 'http://www.marmiton.org',
-            calledUrl : urlMarmiton,
+            baseUrl : baseUrl,
+            calledUrl : urlSearch,
             message: err,
             status: 'error'
           };
@@ -319,15 +323,15 @@ exports.searchMarmiton = function(req, res) {
       });
     }else{
       // Marmiton is available, we save the result in DB and parse the content
-      console.log(urlMarmiton + ' REACHED SUCCESSFULY');
+      console.log(urlSearch + ' REACHED SUCCESSFULY');
       // SAVE RESULT IN DB
-      var searchresults = {searchURL:urlMarmiton,resultsHTML:body};
+      var searchresults = {searchURL:urlSearch,resultsHTML:body};
       var createResult = searchresultCtrl.create(searchresults, req.user);
       if(createResult && createResult.error){
         console.log(createResult.error);
       }
       console.log('Result Saved in cache');
-      res.json(parseSearchResponse(body, urlMarmiton));
+      res.json(parseSearchResponse(body, urlSearch));
     }
     
   });
