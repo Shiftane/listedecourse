@@ -11,23 +11,24 @@ var
   //config = require('meanio').loadConfig();
   searchresultCtrl = require('../../../commons/server/controllers/searchresults');
 
-var siteName = 'Swissmilk';
-var baseUrl = 'http://www.swissmilk.ch/';
-var url = 'http://www.swissmilk.ch/fr/toutes-les-recettes/recherche.html?qt=';
-var logoUrl = 'http://www.swissmilk.ch/favicon.ico';
+var siteName = 'CuisineAZ';
+var baseUrl = 'http://www.cuisineaz.com';
+var url = 'http://www.cuisineaz.com/recettes/recherche_v2.aspx?recherche=';
+var logoUrl = 'http://www.cuisineaz.com/favicon.ico';
 
 
 // PARSING PLACEHOLDER
-var resultsPath = 'div.rdb-recipelist-item';
-var titlePlaceHolder = 'h4';
-var linkDetails = 'a.rdb-link.rdb-recipe';
+var resultsPath = 'div.resultContainer';
+var titlePlaceHolder = 'h2';
+var linkDetails = 'a.rechRecetTitle';
 
 // Recipe Detail
-var recettePath = '';
-var prepTimePlaceHolder = '';
-var cookTimePlaceHolder = '';
-var descriptionPlaceHolder = 'ol.rdb-preparation';
-var imagePlaceHolder = 'img#rdb-recipe-image';
+var recettePath = 'div.hrecipe';
+var titleDetailPlaceHolder = 'h1';
+var prepTimePlaceHolder = 'span.preptime>span';
+var cookTimePlaceHolder = 'span.cooktime>span';
+var descriptionPlaceHolder = 'span.instructions';
+var imagePlaceHolder = 'img.photo';
 
 // UNITIES AND SEPARATOR FOR PARSER
 var unities = ['cuillère à café', ,' tasse ', ' tasses ', ' grosses cuillères à café ', ' cuillères à café ', ' kg ',' g ', ' louche ', ' louches ', ' cube ', 'feuilles', 'ml', ' pot ', ' petit pot ', ' litre ', 'cuillère à soupe', 'cuillères à soupe', ' dosette ', ' gousses ', ' gousse ', ' quelque ', ' quelques ', ' paquet ', ' cl ', ' pincée '];
@@ -50,6 +51,7 @@ var parseSearchResponse = function(body, urlSwissmilk){
       //TODO : STORE THIS INFORMATION IN JSON AND THEN DB
       newRecipe.title = $(titlePlaceHolder,link).text().trim();
       newRecipe.link = $(linkDetails, link).attr('href');
+      if(newRecipe.link)newRecipe.link = newRecipe.link.replace(baseUrl, '');
       newRecipe.prepTime = $(prepTimePlaceHolder, link).parent().text().trim();
       newRecipe.cookingTime = $(cookTimePlaceHolder, link).parent().text().trim();
       newRecipe.details = $('div.m_detail_recette', link).text().trim();
@@ -94,12 +96,13 @@ var evalQuantity = function(quantityStr){
   return;
 };
 
-var parseRecette = function(body, recetteUrl){
+var parseRecetteR = function(body, recetteUrl){
   var $ = cheerio.load(body);
   //console.log('BODY PARSED BY CHEERIO : ' + body);
   var recette = $(recettePath); //use your CSS selector here
   var newRecipe = {};
-  newRecipe.title = $(titlePlaceHolder,recette).text().trim();
+  newRecipe.title = $(titleDetailPlaceHolder,recette).text().trim();
+  console.log('test re ' + $(titleDetailPlaceHolder,recette));
   newRecipe.prepTime = $(prepTimePlaceHolder, recette).text().trim();
   newRecipe.cookingTime = $(cookTimePlaceHolder, recette).text().trim();
   newRecipe.image = $(imagePlaceHolder, recette).attr('src');
@@ -238,7 +241,7 @@ exports.getRecette = function(req, res){
         if(searchresults.length > 0){
           body = searchresults[0].resultsHTML;
           console.log('Result get from CACHE : extract --> ' + body.substring(50));
-          res.json(parseRecette(body, recetteUrl));
+          res.json(parseRecetteR(body, recetteUrl));
         }else{
           // NO manner to get Recipe
           var response = {
@@ -263,7 +266,7 @@ exports.getRecette = function(req, res){
 
       //Case if the Marmiton website is available
       console.log('Request done : TRY TO PARSE IT  URL= ' + recetteUrl);
-      res.json(parseRecette(body, recetteUrl));
+      res.json(parseRecetteR(body, recetteUrl));
     }
   });
   

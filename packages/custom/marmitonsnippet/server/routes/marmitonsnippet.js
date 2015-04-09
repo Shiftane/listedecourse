@@ -10,10 +10,10 @@ module.exports = function(Marmitonsnippet, app, auth, database) {
   });
 
   app.route('/marmitonsnippet/search/:q')
-  .get(marmiton.searchMarmiton);
+  .get(marmiton.search);
 
 
-  app.route('/marmitonsnippet/recette/:url')
+  app.route('/marmitonsnippet/recette/:providerName/:url')
   .get(marmiton.getRecette);
 
   app.get('/marmitonsnippet/example/auth', auth.requiresLogin, function(req, res, next) {

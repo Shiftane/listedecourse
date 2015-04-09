@@ -8,22 +8,16 @@ var
   //Recipe = mongoose.model('recipe'),
   cheerio = require('cheerio'),
   request = require('request'),
+  async = require('async'),
   //config = require('meanio').loadConfig();
-  searchresultCtrl = require('../../../commons/server/controllers/searchresults');
+  searchresultCtrl = require('../../../commons/server/controllers/searchresults'),
+  providers = require('../providers.json');
 
-
-var url = 'http://www.marmiton.org/recettes/recherche.aspx?aqt=';
+//var url = 'http://www.marmiton.org/recettes/recherche.aspx?aqt=';
 var logoUrl = 'http://images.marmitoncdn.org/Skins/1/Common/Images/favicon.ico';
 
 
 // PARSING PLACEHOLDER
-var resultsPath = 'div.m_item.recette_classique';
-var recettePath = 'div.m_bloc_cadre';
-var titlePlaceHolder = 'h1.m_title span.fn';
-var prepTimePlaceHolder = 'span.preptime';
-var cookTimePlaceHolder = 'span.cooktime';
-var descriptionPlaceHolder = 'div.m_content_recette_todo';
-
 
 // UNITIES AND SEPARATOR FOR PARSER
 var unities = ['cuillère à café', ,' tasse ', ' tasses ', ' grosses cuillères à café ', ' cuillères à café ', ' kg ',' g ', ' louche ', ' louches ', ' cube ', 'feuilles', 'ml', ' pot ', ' petit pot ', ' litre ', 'cuillère à soupe', 'cuillères à soupe', ' dosette ', ' gousses ', ' gousse ', ' quelque ', ' quelques ', ' paquet ', ' cl ', ' pincée '];
@@ -33,36 +27,30 @@ var minmaxSeparator = 'à';
 /*
  * Method to parse result from Marmiton with cheerio
 */
-var parseSearchResponse = function(body, urlMarmiton){
+var parseSearchResponse = function(body, url, provider){
   console.log('Request done : TRY TO PARSE IT');
-    var result = [];
+    var results = [];
     var $ = cheerio.load(body);
-    var results = $(resultsPath);
+
+    var searchResults = $(provider.searchOptions.resultsPath);
     
-    $(results).each(function(i, link){
+    $(searchResults).each(function(i, link){
 
+      // GET INFORMATION FROM CONFIG in providers.json
       var newRecipe = {};
+      newRecipe.providerName = provider.name;
+      newRecipe.providerBasedUrl = provider.basedUrl;
+      newRecipe.providerLogoUrl = provider.logoUrl;
+      newRecipe.calledUrl = url;
+      newRecipe.title = $(provider.searchOptions.resultTitle,link).text().trim();
+      newRecipe.link = $(provider.searchOptions.resultLinkToRecipe, link).attr('href');
 
-      //TODO : STORE THIS INFORMATION IN JSON AND THEN DB
-      newRecipe.title = $('div.m_titre_resultat',link).text().trim();
-      newRecipe.link = $('div.m_titre_resultat a', link).attr('href');
-      newRecipe.prepTime = $('div.m_prep_time', link).parent().text().trim();
-      newRecipe.cookingTime = $('div.m_cooking_time', link).parent().text().trim();
-      newRecipe.details = $('div.m_detail_recette', link).text().trim();
-      newRecipe.text = $('div.m_texte_resultat', link).text().trim();
-      result.push(newRecipe);
+      // Remove the basedURL
+      if(newRecipe.link)newRecipe.link = newRecipe.link.replace(provider.basedUrl, '');
+      
+      results.push(newRecipe);
     });
-    console.log('Results Parsed '+result.length);
-    var response = {
-        origin : 'Marmiton',
-        logoUrl : logoUrl,
-        baseUrl : 'http://www.marmiton.org',
-        calledUrl : urlMarmiton,
-        message: 'Parsing finished',
-        result: result,
-        status: 'success'
-    };  
-    return response;
+    return results;
 };
 
 /*
@@ -90,17 +78,48 @@ var evalQuantity = function(quantityStr){
   return;
 };
 
-var parseRecette = function(body, recetteUrl){
+var getProviderbyName = function(providerName){
+  for (var i = 0; i < providers.providers.length; i=i+1) {
+    var provider = providers.providers[i];
+    if(provider.name === providerName){
+      return provider;
+    }
+  }
+};
+
+var parseRecette = function(body, recetteUrl, providerName){
   var $ = cheerio.load(body);
+  var provider = getProviderbyName(providerName);
+  console.log('Provider of Recipe : ' + JSON.stringify(provider));
   //console.log('BODY PARSED BY CHEERIO : ' + body);
-  var recette = $(recettePath); //use your CSS selector here
+  var recette = $(provider.recipeOptions.recettePath); //use your CSS selector here
   var newRecipe = {};
-  newRecipe.title = $(titlePlaceHolder,recette).text().trim();
-  newRecipe.prepTime = $(prepTimePlaceHolder, recette).text().trim();
-  newRecipe.cookingTime = $(cookTimePlaceHolder, recette).text().trim();
-  newRecipe.image = $('a.m_content_recette_illu > img', recette).attr('src');
-  newRecipe.description = $(descriptionPlaceHolder).html();
-  var nbrPersons = $('p.m_content_recette_ingredients > span', recette).text().substring(17,19).trim();
+  newRecipe.title = $(provider.recipeOptions.titlePlaceHolder,recette).text().trim();
+  console.log('test m ' + $(provider.recipeOptions.titlePlaceHolder,recette));
+  newRecipe.prepTime = $(provider.recipeOptions.prepTimePlaceHolder, recette).text().replace('min', '').trim();
+  newRecipe.cookingTime = $(provider.recipeOptions.cookTimePlaceHolder, recette).text().replace('min', '').trim();
+  newRecipe.image = $(provider.recipeOptions.image, recette).attr('src');
+  newRecipe.description = $(provider.recipeOptions.descriptionPlaceHolder).html();
+
+  // People Number finder
+  var nbrPersonsStr = $(provider.recipeOptions.peoplePlaceHolder, recette).text();
+  var nbrPersons;
+  for (var i = provider.recipeOptions.peopleParser.length - 1; i >= 0; i = i -1) {
+    var parser = provider.recipeOptions.peopleParser[i];
+    var startIndex = parser.indexOf('{')-1;
+    var endStr = parser.substring(parser.indexOf('}')+1, parser.length);
+    var stopIndex = nbrPersonsStr.indexOf(endStr);
+    nbrPersons = nbrPersonsStr.substring(startIndex,stopIndex).trim();
+    console.log(nbrPersonsStr + '--> start = ' + startIndex + ' | end ' + endStr + ' | stop ' + stopIndex);
+    if(nbrPersons){
+      break;
+    }
+  }
+
+  // Ingredients
+
+  // FOR MARMITON
+  // TODO FIND SOMETHING GENERIC
   $('p.m_content_recette_ingredients span', recette).remove();
   var ingredientsStr = $('p.m_content_recette_ingredients', recette).text().trim().split('-');
   var ingredients = [];
@@ -192,9 +211,9 @@ var parseRecette = function(body, recetteUrl){
 
   
   var response = {
-      origin : 'Marmiton',
+      origin : provider.name,
       recipeUrl : recetteUrl,
-      logoUrl : logoUrl,
+      logoUrl : provider.logoUrl,
       message: 'Parsing finished',
       result: newRecipe,
       status: 'success'
@@ -207,7 +226,9 @@ var parseRecette = function(body, recetteUrl){
  */
 exports.getRecette = function(req, res){  
   var recetteUrl = req.params.url;
-  console.log('Try to reach : ' + recetteUrl);
+  var providerName = req.params.providerName;
+  //var recetteProvider = req.params.provider;
+  console.log('Try to reach : ' + providerName + ' / ' + recetteUrl);
   
   var options = {
     url: recetteUrl,
@@ -259,7 +280,7 @@ exports.getRecette = function(req, res){
 
       //Case if the Marmiton website is available
       console.log('Request done : TRY TO PARSE IT  URL= ' + recetteUrl);
-      res.json(parseRecette(body, recetteUrl));
+      res.json(parseRecette(body, recetteUrl, providerName));
     }
   });
   
@@ -268,69 +289,85 @@ exports.getRecette = function(req, res){
 /**
  * Search in Marmiton
  */
-exports.searchMarmiton = function(req, res) {
+exports.search = function(req, res) {
   var searchTerm = req.params.q;
   console.log('SearchTerm : ' + searchTerm);
 
   // START TO SEARCH ON MARMITON
   // Specific Addition of word in marmiton with "-"
-  var urlMarmiton = url + searchTerm.replace(' ', '-');  
-  console.log('Try to reach : ' + urlMarmiton);
-  var options = {
-    url: urlMarmiton,
-    headers: {
-        'User-Agent': 'Mozilla/5.0'
-      },
-      timeout : 5000
-  };
-  request(options, function(err, resp, body){
-    var response = {};
-    if(err){
-      // We get from the cache if Marmiton is down
-      console.log('Request done : ERORR --> ' + err);
-      var cachedResults = searchresultCtrl.searchresultbyUrl(urlMarmiton);
-      console.log('Try to get from cache');
-      cachedResults.exec(function(err, searchresults){
-        if (err) {
-          console.log('Error getting from cache : ' + err);
-          return {
-            error: 'Cannot find searchresults with URL = ' + urlMarmiton
-          };
+  var results = [];
+  var errors = [];
+  var q = async.queue(function (task, done) {
+    request(task.options, function(err, resp, body) {
+      //console.log(JSON.stringify(task));
+      var url = task.options.url;
+      var provider = task.provider;
+      if(err){
+        // We get from the cache if Marmiton is down
+        console.log('Request done : ERORR --> ' + err);
+        var cachedResults = searchresultCtrl.searchresultbyUrl(url);
+        console.log('Try to get from cache');
+        cachedResults.exec(function(err, searchresults){
+          if (err) {
+            console.log('Error getting from cache : ' + err);
+            errors.push('Cannot find searchresults with URL = ' + url);
+            return; 
+          }
+          console.log('get from cache success ');
+          // + searchresults[0]);
+          //console.log('Result from cache : ' + searchresults);
+          if(searchresults.length > 0){
+            body = searchresults[0].resultsHTML;
+            console.log('Result get from CACHE : extract --> ' + body.substring(50));
+            results.push.apply(results, parseSearchResponse(body, url, provider));
+          }else{
+            errors.push(err);
+          }
+        });
+      }else{
+        // Marmiton is available, we save the result in DB and parse the content
+        console.log(url + ' REACHED SUCCESSFULY');
+        // SAVE RESULT IN DB
+        var searchresults = {searchURL:url,resultsHTML:body};
+        var createResult = searchresultCtrl.create(searchresults, req.user);
+        if(createResult && createResult.error){
+          console.log(createResult.error);
         }
-        console.log('get from cache success ');
-        // + searchresults[0]);
-        //console.log('Result from cache : ' + searchresults);
-        if(searchresults.length > 0){
-          body = searchresults[0].resultsHTML;
-          console.log('Result get from CACHE : extract --> ' + body.substring(50));
-          res.json(parseSearchResponse(body, urlMarmiton));
-        }else{
-          // NO manner to get Recipe
-          response = {
-            origin : 'Marmiton',
-            logoUrl : logoUrl,
-            baseUrl : 'http://www.marmiton.org',
-            calledUrl : urlMarmiton,
-            message: err,
-            status: 'error'
-          };
-          res.json(response);
-        }
-      });
-    }else{
-      // Marmiton is available, we save the result in DB and parse the content
-      console.log(urlMarmiton + ' REACHED SUCCESSFULY');
-      // SAVE RESULT IN DB
-      var searchresults = {searchURL:urlMarmiton,resultsHTML:body};
-      var createResult = searchresultCtrl.create(searchresults, req.user);
-      if(createResult && createResult.error){
-        console.log(createResult.error);
+        console.log('Result Saved in cache');
+        results.push.apply(results, parseSearchResponse(body, url, provider));
       }
-      console.log('Result Saved in cache');
-      res.json(parseSearchResponse(body, urlMarmiton));
-    }
-    
+      done();
+    });
+  }, 5);
+  var urlsToCall = [];
+
+  providers.providers.forEach(function(provider){
+    //console.log(provider);
+    var urltoCall = provider.url + searchTerm.replace(' ', provider.spaceCharReplacement);
+    console.log('Try to reach : ' + urltoCall);
+    var options = {
+      url: urltoCall,
+      headers: {
+          'User-Agent': 'Mozilla/5.0'
+        },
+        timeout : 5000
+    };  
+    urlsToCall.push({options: options, provider : provider});
   });
+  //console.log(urlsToCall);
+  q.push(urlsToCall, function(err){
+    if(err){
+      console.log('Provider error ' + err);
+    }else{
+      console.log('Provider Processed SUCCESSFULY !');
+    }
+  });
+
+  q.drain = function(){
+    console.log('terminated');
+    res.json({results:results, errors : errors});
+  };
+  
   
 };
 
