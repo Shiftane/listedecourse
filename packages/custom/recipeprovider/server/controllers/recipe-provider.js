@@ -377,7 +377,12 @@ exports.search = function(req, res) {
   });
 
   q.drain = function(){
-    console.log('terminated');
+    console.log('terminated : ' + JSON.stringify(results));
+    results.sort(function(a, b){
+      if(a.title < b.title) return -1;
+      if(a.title > b.title) return 1;
+      return 0;
+    });
     res.json({results:results, errors : errors});
   };
   
