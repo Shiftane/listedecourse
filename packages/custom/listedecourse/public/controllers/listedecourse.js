@@ -39,8 +39,8 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
         	$log.info('Search for query : ' + this.query);
             // TODO Waiting screen
             $('body').addClass('loading');
-
-        	$http.get('/marmitonsnippet/search/' + this.query).
+            $scope.results = [];
+        	$http.get('/recipeprovider/search/' + this.query).
     		  success(function(data, status, headers, config) {
     		  	$scope.results = data;
     		  	$log.info($scope.results);
@@ -51,16 +51,14 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
     		    $scope.results = {};
                 $('body').removeClass('loading');
     		 });
-            //$location.path('/search/'+this.query);
-            //$location.replace();
         };
-        $scope.getRecipe = function(recipeUrl){
+        $scope.getRecipe = function(recipeUrl, recipeProviderName){
             $('body').addClass('loading');
-            $analytics.pageTrack('recipe/' + recipeUrl);
+            $analytics.pageTrack('recipe/'+recipeProviderName+'/' + recipeUrl);
             //$location.path('/recipe/'+recipeUrl);
         	$log.info('Get Recipe : ' + recipeUrl);
 
-        	$http.get('/marmitonsnippet/recette/' + encodeURIComponent(recipeUrl)).
+        	$http.get('/recipeprovider/recette/' + recipeProviderName + '/' + encodeURIComponent(recipeUrl)).
     		  success(function(data, status, headers, config) {
                 $log.info('recipe ' + $scope.recipe);
                 if($scope.recipe && $scope.recipe.result && $scope.recipe.result.image){
