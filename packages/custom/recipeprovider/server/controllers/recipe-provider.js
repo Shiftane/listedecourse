@@ -18,7 +18,8 @@ var logoUrl = 'http://images.marmitoncdn.org/Skins/1/Common/Images/favicon.ico';
 
 
 // UNITIES AND SEPARATOR FOR PARSER
-var unities = ['cuillère à café', ,' tasse ', ' tasses ', ' grosses cuillères à café ', ' cuillères à café ', ' kg ',' g ', ' louche ', ' louches ', ' cube ', 'feuilles', 'ml', ' pot ', ' petit pot ', ' litre ', 'cuillère à soupe', 'cuillères à soupe', ' dosette ', ' gousses ', ' gousse ', ' quelque ', ' quelques ', ' paquet ', ' cl ', ' pincée '];
+var textToReplace = [{textOri : ',', textFinal : '.'},{textOri : 'environ', textFinal : ''}];
+var unities = ['cuillère à café', ,' tasse ', ' tasses ', ' grosses cuillères à café ', ' cuillères à café ', ' kg ',' g ', ' louche ', ' louches ', ' cube ', 'feuilles', 'ml', ' pot ', ' petit pot ', ' litre ', 'cuillère à soupe', 'cuillères à soupe', ' dosette ', ' gousses ', ' gousse ', ' quelque ', ' quelques ', ' paquet ', ' cl ', ' pincée ', 'Gr '];
 var separator = ['de', 'd\'', 'du'];
 var minmaxSeparator = 'à';
 
@@ -123,7 +124,7 @@ var parseRecette = function(body, recetteUrl, providerName){
   switch(provider.recipeOptions.ingredientsParsingMethod){
     case 'DashMethod' :
       $(provider.recipeOptions.toDeleteBeforeParsing, recette).remove();
-      ingredientsStr = $(provider.recipeOptions.ingredientPlaceHolder, recette).text().trim().split('-');
+      ingredientsStr = $(provider.recipeOptions.ingredientPlaceHolder, recette).text().trim().split('- ');
       
       break;
     case 'ListMethod' :
@@ -139,9 +140,16 @@ var parseRecette = function(body, recetteUrl, providerName){
   console.log('Ingredients : ' + ingredientsStr);
 
   ingredientsStr.forEach(function(ingredientStr, i){
+    
     if(ingredientStr === ''){
       return;
     }
+
+    // Start with replace text in ingredients
+    textToReplace.forEach(function(toReplace){
+      ingredientStr = ingredientStr.replace(toReplace.textOri, toReplace.textFinal);
+    });
+
     var ingredient = {};
     var nbrUnityFound = 0;
 

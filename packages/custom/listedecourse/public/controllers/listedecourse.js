@@ -33,7 +33,7 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
 		$scope.NumberOfRecipe = 0;
 		$scope.NumberOfIngredient = 0;
         $scope.search = function(){
-
+            $('searchResults').removeClass('hidden-xs');
             $analytics.pageTrack('search/'+this.query);
             
         	$log.info('Search for query : ' + this.query);
@@ -54,6 +54,7 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
         };
         $scope.getRecipe = function(recipeUrl, recipeProviderName){
             $('body').addClass('loading');
+            $('searchResults').addClass('hidden-xs');
             $analytics.pageTrack('recipe/'+recipeProviderName+'/' + recipeUrl);
             //$location.path('/recipe/'+recipeUrl);
         	$log.info('Get Recipe : ' + recipeUrl);
