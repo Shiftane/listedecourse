@@ -1,7 +1,7 @@
 {
-  "name": "marmitonsnippet",
+  "name": "recipeprovider",
   "version": "0.0.1",
-  "description": "Some description of marmitonsnippet",
+  "description": "Some description of recipeprovider",
   "author": {
     "name": "mean scaffold"
   },

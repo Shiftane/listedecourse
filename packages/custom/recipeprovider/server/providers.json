@@ -20,7 +20,11 @@
 				"image" : "a.m_content_recette_illu > img",
 				"peoplePlaceHolder" : "p.m_content_recette_ingredients > span",
 				"peopleParser" : ["Ingrédients (pour {} personnes) :", "Ingrédients (pour {} verrines) :"],
-				"ingredientsPlaceHolder" : "p.m_content_recette_ingredients span"
+				"ingredientsPlaceHolder" : "p.m_content_recette_ingredients span",
+				"ingredientsParsingMethod" : "DashMethod",
+				"toDeleteBeforeParsing" : "p.m_content_recette_ingredients span",
+				"ingredientPlaceHolder" : "p.m_content_recette_ingredients"
+
 			}
 		},
 		{
@@ -39,12 +43,13 @@
 				"titlePlaceHolder" : "h1",
 				"prepTimePlaceHolder" : "span.preptime",
 				"cookTimePlaceHolder" : "span.cooktime",
-				"descriptionPlaceHolder" : "div.preparation",
+				"descriptionPlaceHolder" : "span.instructions",
 				"image" : "img.photo",
 				"peoplePlaceHolder" : "span.yield",
 				"peopleParser" : "{} Personne(s)",
-				"ingredientsPlaceHolder" : "p.m_content_recette_ingredients span"
-				
+				"ingredientsPlaceHolder" : "p.m_content_recette_ingredients span",
+				"ingredientsParsingMethod" : "ListMethod",
+				"ingredientPlaceHolder" : "li.ingredient"
 			}
 			
 		}	

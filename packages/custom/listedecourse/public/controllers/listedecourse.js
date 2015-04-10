@@ -40,7 +40,7 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
             // TODO Waiting screen
             $('body').addClass('loading');
             $scope.results = [];
-        	$http.get('/marmitonsnippet/search/' + this.query).
+        	$http.get('/recipeprovider/search/' + this.query).
     		  success(function(data, status, headers, config) {
     		  	$scope.results = data;
     		  	$log.info($scope.results);
@@ -58,7 +58,7 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
             //$location.path('/recipe/'+recipeUrl);
         	$log.info('Get Recipe : ' + recipeUrl);
 
-        	$http.get('/marmitonsnippet/recette/' + recipeProviderName + '/' + encodeURIComponent(recipeUrl)).
+        	$http.get('/recipeprovider/recette/' + recipeProviderName + '/' + encodeURIComponent(recipeUrl)).
     		  success(function(data, status, headers, config) {
                 $log.info('recipe ' + $scope.recipe);
                 if($scope.recipe && $scope.recipe.result && $scope.recipe.result.image){

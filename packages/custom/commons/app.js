@@ -17,14 +17,7 @@ Commons.register(function(app, auth, database) {
   Commons.routes(app, auth, database);
 
   //We are adding a link to the main menu for all authenticated users
-  /*Commons.menus.add({
-    title: 'Recherche de recette',
-    link: 'marmiton search',
-    roles: ['anonymous'],
-    menu: 'main'
-  });*/
-  
-  Commons.aggregateAsset('css', 'marmitonsnippet.css');
+
 
   /**
     //Uncomment to use. Requires meanio@0.3.7 or above

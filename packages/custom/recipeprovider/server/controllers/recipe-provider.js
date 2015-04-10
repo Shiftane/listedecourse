@@ -17,8 +17,6 @@ var
 var logoUrl = 'http://images.marmitoncdn.org/Skins/1/Common/Images/favicon.ico';
 
 
-// PARSING PLACEHOLDER
-
 // UNITIES AND SEPARATOR FOR PARSER
 var unities = ['cuillère à café', ,' tasse ', ' tasses ', ' grosses cuillères à café ', ' cuillères à café ', ' kg ',' g ', ' louche ', ' louches ', ' cube ', 'feuilles', 'ml', ' pot ', ' petit pot ', ' litre ', 'cuillère à soupe', 'cuillères à soupe', ' dosette ', ' gousses ', ' gousse ', ' quelque ', ' quelques ', ' paquet ', ' cl ', ' pincée '];
 var separator = ['de', 'd\'', 'du'];
@@ -99,7 +97,9 @@ var parseRecette = function(body, recetteUrl, providerName){
   newRecipe.prepTime = $(provider.recipeOptions.prepTimePlaceHolder, recette).text().replace('min', '').trim();
   newRecipe.cookingTime = $(provider.recipeOptions.cookTimePlaceHolder, recette).text().replace('min', '').trim();
   newRecipe.image = $(provider.recipeOptions.image, recette).attr('src');
-  newRecipe.description = $(provider.recipeOptions.descriptionPlaceHolder).html();
+  newRecipe.description = $(provider.recipeOptions.descriptionPlaceHolder, recette).html();
+
+  console.log('Recipe Main info : ' + JSON.stringify(newRecipe));
 
   // People Number finder
   var nbrPersonsStr = $(provider.recipeOptions.peoplePlaceHolder, recette).text();
@@ -111,19 +111,32 @@ var parseRecette = function(body, recetteUrl, providerName){
     var stopIndex = nbrPersonsStr.indexOf(endStr);
     nbrPersons = nbrPersonsStr.substring(startIndex,stopIndex).trim();
     console.log(nbrPersonsStr + '--> start = ' + startIndex + ' | end ' + endStr + ' | stop ' + stopIndex);
-    if(nbrPersons){
+    if(startIndex !== -1 && stopIndex !== -1){
       break;
     }
   }
+  console.log('Number of people : ' + nbrPersons);
 
   // Ingredients
+  var ingredientsStr = [];
 
-  // FOR MARMITON
-  // TODO FIND SOMETHING GENERIC
-  $('p.m_content_recette_ingredients span', recette).remove();
-  var ingredientsStr = $('p.m_content_recette_ingredients', recette).text().trim().split('-');
+  switch(provider.recipeOptions.ingredientsParsingMethod){
+    case 'DashMethod' :
+      $(provider.recipeOptions.toDeleteBeforeParsing, recette).remove();
+      ingredientsStr = $(provider.recipeOptions.ingredientPlaceHolder, recette).text().trim().split('-');
+      
+      break;
+    case 'ListMethod' :
+      ingredientsStr =  $(provider.recipeOptions.ingredientPlaceHolder, recette).map(function() {
+                          return $(this).text();
+                        }).get();
+      break;
+    default :
+
+  }
+  
   var ingredients = [];
-  console.log('Recipe : ' + JSON.stringify(newRecipe));
+  console.log('Ingredients : ' + ingredientsStr);
 
   ingredientsStr.forEach(function(ingredientStr, i){
     if(ingredientStr === ''){
