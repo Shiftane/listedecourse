@@ -29,7 +29,7 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
 		    });
 		};
 
-    	$scope.results = [];
+    	
 		$scope.NumberOfRecipe = 0;
 		$scope.NumberOfIngredient = 0;
         $scope.search = function(){
