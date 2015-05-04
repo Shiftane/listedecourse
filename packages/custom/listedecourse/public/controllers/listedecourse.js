@@ -114,6 +114,18 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
 
     $scope.saveRecetteInListeDeCourse = function(){
         $analytics.pageTrack('saverecipe');
+        // Animate button with number of recipe added
+        $('.navbar-static-top button').animate(
+            {opacity: '0.2'}, 'slow'
+            ).animate(
+            {opacity: '1'}, 'slow'
+            );
+        $('.navbar-static-top button span').animate(
+            {'font-weight': 'bold', 'color' : '#dd0000'}, 'slow'
+            ).animate(
+            {'font-weight': 'none', 'color' : '#428bca'}, 'slow'
+            );
+
     	if($scope.listedecourse){
             $scope.recipe.result.contenu.nbrPersons = $scope.num;
     		$scope.listedecourse.recettes.push($scope.recipe.result);
