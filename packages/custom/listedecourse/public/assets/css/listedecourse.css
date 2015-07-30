@@ -321,3 +321,10 @@ body.loading .modal {
     color : #29A629;
     font-weight: bold;
 }
+.homepage{
+    margin-top : 40px;
+    margin-bottom : 40px;
+}
+.homepage-box-proposal{
+    text-align: center;    
+}

@@ -3,7 +3,7 @@
 (function() {
   // Login Controller Spec
   describe('MEAN controllers', function() {
-    describe('LoginCtrl', function() {
+    describe('LoginController', function() {
       beforeEach(function() {
         this.addMatchers({
           toEqualData: function(expected) {
@@ -18,7 +18,7 @@
         module('mean.users');
       });
 
-      var LoginCtrl,
+      var LoginController,
         scope,
         $rootScope,
         $httpBackend,
@@ -29,7 +29,7 @@
         scope = _$rootScope_.$new();
         $rootScope = _$rootScope_;
 
-        LoginCtrl = $controller('LoginCtrl', {
+        LoginController = $controller('LoginController', {
           $scope: scope,
           $rootScope: _$rootScope_
         });
@@ -72,7 +72,7 @@
       });
     });
 
-    describe('RegisterCtrl', function() {
+    describe('RegisterController', function() {
       beforeEach(function() {
         this.addMatchers({
           toEqualData: function(expected) {
@@ -87,7 +87,7 @@
         module('mean.users');
       });
 
-      var RegisterCtrl,
+      var RegisterController,
         scope,
         $rootScope,
         $httpBackend,
@@ -98,7 +98,7 @@
         scope = _$rootScope_.$new();
         $rootScope = _$rootScope_;
 
-        RegisterCtrl = $controller('RegisterCtrl', {
+        RegisterController = $controller('RegisterController', {
           $scope: scope,
           $rootScope: _$rootScope_
         });

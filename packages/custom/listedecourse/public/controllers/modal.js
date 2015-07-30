@@ -1,5 +1,5 @@
 'use strict';
-angular.module('mean.listedecourse').controller('ModalInstanceCtrl', function ($scope, $log, $modalInstance, listedecourse, $analytics) {
+angular.module('mean.listedecourse').controller('ModalInstanceController', function ($scope, $log, $modalInstance, listedecourse, $analytics) {
 
   $scope.listedecourse = listedecourse;
   // $scope.selected = {

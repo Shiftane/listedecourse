@@ -1,8 +1,8 @@
 /*global $:false */
 'use strict';
 
-angular.module('mean.listedecourse').controller('ListedecourseController', ['$scope', '$log', '$http', 'Global', 'Listedecourse','$modal','$sce', '$analytics', '$location', '$stateParams',
-  function($scope, $log, $http, Global, Listedecourse, $modal, $sce, $analytics, $location, $stateParams) {
+angular.module('mean.listedecourse').controller('ListedecourseController', ['$scope', '$log', '$http', 'Global', 'ideasService','$modal','$sce', '$analytics', '$location', '$stateParams',
+  function($scope, $log, $http, Global, ideasService, $modal, $sce, $analytics, $location, $stateParams) {
     $scope.global = Global;
     $scope.package = {
       name: 'listedecourse'
@@ -24,14 +24,16 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
             $log.info('RECIPE');
             $scope.getRecipe($stateParams.recipeURL, $stateParams.providerName);
         }
-        
+        ideasService($scope);
+        $log.info('TEST : ' + $scope.ideas);
+
     };
 
   	$scope.open = function (size) {
         $analytics.pageTrack('openRecipe');
 	    var modalInstance = $modal.open({
 	      templateUrl: '/listedecourse/views/myModal.html',
-	      controller: 'ModalInstanceCtrl',
+	      controller: 'ModalInstanceController',
 	      size: size,
 	      resolve: {
 	        listedecourse: function () {
@@ -67,6 +69,7 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
             $('body').removeClass('loading');
 		 });
     };
+
     $scope.getRecipe = function(recipeUrl, recipeProviderName){
         $('body').addClass('loading');
         $('searchResults').addClass('hidden-xs');
@@ -144,7 +147,7 @@ angular.module('mean.listedecourse').controller('ListedecourseController', ['$sc
     		var listedecourse = {};
     		listedecourse.name = 'Default';
     		listedecourse.recettes = [];
-    		listedecourse.recettes.push($scope.recipe.result);
+    		//listedecourse.recettes.push($scope.recipe.result);
     		$log.info('Je vais sauver cette liste d\'ingrédients');
 	    	$http.post('/listedecourses', listedecourse).
 			  success(function(data, status, headers, config) {

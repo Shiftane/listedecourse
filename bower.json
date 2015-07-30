@@ -14,6 +14,10 @@
     "angular-number-picker": "latest",
     "angular-ui-tree": "latest",
     "angulartics": "latest",
-    "angular-mailchimp":"latest"
+    "angular-mailchimp": "latest",
+    "ng-clip":"latest"
+  },
+  "resolutions": {
+    "angular": "1.4.1"
   }
 }
