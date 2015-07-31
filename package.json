@@ -41,7 +41,7 @@
     "compression": "^1.0.1",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^0.8.2",
-    "consolidate": "^0.10.0  ",
+    "consolidate": "0.13.1",
     "cookie-parser": "^1.1.0",
     "dependable": "~0.2.5",
     "errorhandler": "^1.0.0",
