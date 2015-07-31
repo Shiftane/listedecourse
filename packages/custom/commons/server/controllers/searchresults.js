@@ -33,13 +33,14 @@ exports.searchresultbyUrl = function(searchURL) {
 exports.create = function(searchResults, user) {
   var searchresult = new SearchResult(searchResults);
   searchresult.user = user;
-
+  console.log('Save in progress in searchResult');
   searchresult.save(function(err) {
     if (err) {
       return {
         error: 'Cannot save the searchresult'
       };
     }
+    console.log('Save Finished');
      return searchresult;
 
   });
@@ -52,13 +53,14 @@ exports.update = function(req, res) {
   var searchresult = req.searchresult;
 
   searchresult = _.extend(searchresult, req.body);
-
+  console.log('Save in progress in searchResult');
   searchresult.save(function(err) {
     if (err) {
       return res.json(500, {
         error: 'Cannot update the searchresult'
       });
     }
+    console.log('Save Finished');
     res.json(searchresult);
 
   });

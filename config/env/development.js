@@ -2,9 +2,9 @@
 
 module.exports = {
   db: 'mongodb://localhost/mean-dev1',
-	debug: 'true',
+	debug: true,
   mongoose: {
-    debug: false
+    debug: true
   },
   app: {
     name: 'Les meilleures recettes du web dans votre liste de courses'

@@ -26,7 +26,7 @@ exports.listedecourse = function(req, res, next, id) {
 exports.create = function(req, res) {
   var listedecourse = new ListeDeCourse(req.body);
   listedecourse.user = req.user;
-
+  console.log('Creation start : ' + listedecourse);
   listedecourse.save(function(err) {
     if (err) {
       return res.json(500, {
@@ -34,7 +34,7 @@ exports.create = function(req, res) {
       });
     }
     res.json(listedecourse);
-
+    console.log('Creation Finish');
   });
 };
 

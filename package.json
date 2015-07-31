@@ -26,8 +26,8 @@
     "url": "https://github.com/linnovate/mean.git"
   },
   "engines": {
-    "node": "0.10.x",
-    "npm": "1.4.x"
+    "node": "0.12.0",
+    "npm": "2.5.1"
   },
   "scripts": {
     "start": "node node_modules/grunt-cli/bin/grunt",
@@ -65,9 +65,10 @@
     "lodash": "^2.4.1",
     "meanio": "~0.5.10",
     "method-override": "^1.0.0",
-    "mongoose": "^3.8.8",
+    "mongoose": "3.6.x",
     "morgan": "^1.0.0",
     "ms": "0.6.2",
+    "ng-clip":"0.2.5",
     "nodemailer": "1.2.2",
     "passport": "^0.2.0",
     "passport-facebook": "^1.0.3",
