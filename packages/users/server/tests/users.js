@@ -17,10 +17,10 @@ function getRandomString(len) {
 /**
  * Module dependencies.
  */
-var should = require('should'),
-  mongoose = require('mongoose'),
+/*var should = require('should'),
+  mongoose = require('mongoose');
   User = mongoose.model('User');
-
+*/
 /**
  * Globals
  */
