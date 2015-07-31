@@ -131,7 +131,7 @@ module.exports = function(grunt) {
   if (process.env.NODE_ENV === 'production') {
     grunt.registerTask('test', ['env:test', 'mochaTest', 'karma:unit']);
   } else {
-    grunt.registerTask('test', ['external_daemon', 'env:test', 'mochaTest', 'karma:unit']);
+    grunt.registerTask('test', ['env:test', 'mochaTest', 'karma:unit']);
   }
   
   
