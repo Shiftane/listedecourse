@@ -14,6 +14,7 @@ var mean = require('meanio'),
   assetmanager = require('assetmanager'),
   session = require('express-session'),
   mongoStore = require('connect-mongo')(session),
+  mongoose       = require('mongoose'),
   helpers = require('view-helpers'),
   flash = require('connect-flash'),
   config = mean.loadConfig();
@@ -80,6 +81,7 @@ module.exports = function(app, passport, db) {
     secret: config.sessionSecret,
     store: new mongoStore({
       db: db.connection.db,
+      mongooseConnection: mongoose.connection,
       collection: config.sessionCollection
     }),
     cookie: config.sessionCookie,
