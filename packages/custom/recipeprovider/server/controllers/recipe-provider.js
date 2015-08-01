@@ -19,7 +19,7 @@ var logoUrl = 'http://images.marmitoncdn.org/Skins/1/Common/Images/favicon.ico';
 
 // UNITIES AND SEPARATOR FOR PARSER
 var textToReplace = [{textOri : ',', textFinal : '.'},{textOri : 'environ', textFinal : ''}];
-var unities = ['cuillère à café', ,' tasse ', ' tasses ', ' grosses cuillères à café ', ' cuillères à café ', ' kg ',' g ', ' louche ', ' louches ', ' cube ', 'feuilles', 'ml', ' pot ', ' petit pot ', ' litre ', 'cuillère à soupe', 'cuillères à soupe', ' dosette ', ' gousses ', ' gousse ', ' quelque ', ' quelques ', ' paquet ', ' cl ', ' pincée ', 'Gr '];
+var unities = ['cuillère à café', ' tasse ', ' tasses ', ' grosses cuillères à café ', ' cuillères à café ', ' kg ',' g ', ' louche ', ' louches ', ' cube ', 'feuilles', 'ml', ' pot ', ' petit pot ', ' litre ', 'cuillère à soupe', 'cuillères à soupe', ' dosette ', ' gousses ', ' gousse ', ' quelque ', ' quelques ', ' paquet ', ' cl ', ' pincée ', 'Gr '];
 var separator = ['de', 'd\'', 'du'];
 var minmaxSeparator = 'à';
 
