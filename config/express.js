@@ -76,7 +76,7 @@ module.exports = function(app, passport, db) {
     });
   });
   
-  mongoose.connect(config.db);
+  //mongoose.connect(config.db);
   // Express/Mongo session storage
   app.use(session({
     secret: config.sessionSecret,
