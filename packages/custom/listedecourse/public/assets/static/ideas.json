@@ -16,9 +16,9 @@
 		},
 		{
 			"name" : "PatesVeggi",
-			"label" : "Gouter les pates végétariennes",
+			"label" : "Gouter les pates du moments",
 			"imgURL" : "/listedecourse/assets/img/PatesVeggi.jpg",
-			"searchTerms" : "pates végétariennes"
+			"searchTerms" : "pates"
 
 		}
 	]
